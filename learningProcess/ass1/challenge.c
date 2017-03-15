@@ -7,10 +7,11 @@
 
 void guessGame();   //declare functions first
 int get_PCguess(const int start, const int end);
-int get_guess(const int attempt);
+int restTime_showPCGuess(const int attempt);
 int is_game_won(const int secret, const int guess);
 
-int number_typedIn;  //**** used
+
+int PCguessNum;
 int max; //**used
 
 int main(){
@@ -23,21 +24,26 @@ int main(){
 void guessGame(){
 
  printf("Pick a integer between 1 and 100. Let PC guess (5 times Maximum Attempts!) \n");
-   int PCguessNum = get_PCguess(START,END);
+   int number_typedIn = 1;
+   PCguessNum = get_PCguess(START,END);
    int start = 1;
    int end = 100;  // initial interval 
    max = ATTEMPTS;
+   int guessTimesLeft = 0;
+   int guessFailed = 1;
+   int restart = 1;
+   char answer;
    
    while (max>0) {      
       scanf("%d",&number_typedIn);      // user types in a number
       
-      PCguessNum = get_PCguess(start,end);  // PC guess
-      guessTimesLeft = get_guess(max);
-      guessFailed = is_game_won(number_typedIn,PCguessNum);
+      PCguessNum = get_PCguess(start,end);  // PC guess a number
+      guessTimesLeft = restTime_showPCGuess(max); // show what PC guess and number of remaining opportunities 
+      guessFailed = is_game_won(number_typedIn,PCguessNum); // check if pc failed
       
       
       
-      guessTimesLeft = get_guess(max);  // **change to show what PC guess later     
+        
       guessFailed = is_game_won(number_typedIn,PCguessNum);
       if(PCguessNum == number_typedIn){
           break;  
@@ -77,16 +83,31 @@ int get_PCguess(const int start, const int end){
 
 
 int is_game_won(const int secret, const int guess){
-  
+       char userHelp;
+       
        if(secret == guess){
-            printf("Congradulations! You are so lucky! \n");
+            printf("Congradulations! Your PC are so lucky! \n");
             return 0;
             
-        }else if (secret < guess){
-            printf("Hmmm... My number is bigger than yours\n");
-            max --;    
         }
+        
+      getchar();    //eat a    "enter" of input buffer
+     useHelp = getchar();
+    printf("Play agian?(y/n)?");
+   
+    if(userHelp == 76 || userHelp == 108){
+        printf("my number is lower, maybe try again \n");   //L &L
+        return;
+    }else if(answer == 89 || answer == 121){
+        guess();
+    }else{
+        printf("\nonly options Y/y/N/n can be recognised\n");
+	printf("\n you shoud run the program again\n");
+    }
+        
+        
         else{
+            
             printf("Hmmm... My number is smaller than yours\n");
             max --;
         }
@@ -95,7 +116,12 @@ int is_game_won(const int secret, const int guess){
 }
 
 
-
+int restTime_showPCGuess(const int attempt){
+  int restTimes = 6-attempt;
+  printf("PC guess: \"%d\"\n",PCguessNum);
+  printf("Times of guesses PC has so far: %d\n",restTimes);
+  return restTimes;
+}
 
 
 
