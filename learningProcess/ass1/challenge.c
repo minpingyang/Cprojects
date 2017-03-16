@@ -18,12 +18,12 @@ int end;
 
 
 int main(){
-    printf("!!!-------~~~~~!!!!!!!!!");
+    
     guessGame();
     return 0;
 }
 int get_PCguess(const int start, const int end){
-  
+    max --;
     srand(time(NULL));
     
     int randomNumber = (rand()%end)+start;
@@ -41,23 +41,28 @@ int is_game_won(const int secret, const int guess){
             printf("Congratulations! Your PC are so lucky! \n");
             return 0;           
         }
+   //if attempts equals 0
+      if(max==0) return 1;
    //CASE2 : FAILED 
      printf("----------------------------------------------\n");
      printf("Seems like PC guess a wrong number.");
-     printf("Can you give a hint for PC? \n type in (l/L) means real number lower \n");
-     printf(" type in (h/H) means real number higher \n");
+     printf("Can you give a hint for PC? \n type in (l/L) means your number lower than PC guess \n");
+     printf(" type in (h/H) means your number higher than PC guess\n");
   
-    char userHelp = getchar();
-   
-    if((userHelp == 76 || userHelp == 108)&&(guess>secret)){
+    char userHelp;
+    do {
+      userHelp = getchar();
+   } while(userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H');
+      
+    if((userHelp == 'l' || userHelp == 'L')&&(guess>secret)){
         printf("my number is lower, PC try again \n");   //L &L
         end = guess;
-        max --;
         
-    }else if((userHelp == 72 || userHelp == 104)&&(guess<secret)){
+        
+    }else if((userHelp == 'h' || userHelp == 'H')&&(guess<secret)){
         printf("my number is higher, PC try again \n");   //H &h
         start = guess;
-        max --;
+       // max --;
     }else {
        printf("You have not given the right hint，Could u next time give the right hint? \n");
     }
@@ -67,7 +72,7 @@ int is_game_won(const int secret, const int guess){
 
 
 int restTime_showPCGuess(const int attempt){
-  int restTimes = 6-attempt;
+  int restTimes = 5-attempt;
   printf("PC guess: \"%d\"\n",PCguessNum);
   printf("Times of guesses PC has so far: %d\n",restTimes);
   return restTimes;
@@ -87,7 +92,7 @@ void guessGame(){
    printf("The number you chose is:  ");
    scanf("%d",&number_typedIn);      // user types in a number
    
-   while (max>0) {      
+      do {      
       PCguessNum = get_PCguess(start,end);  // PC guess a number
       guessTimesLeft = restTime_showPCGuess(max); // show what PC guess and number of remaining opportunities 
       guessFailed = is_game_won(number_typedIn,PCguessNum); // check if pc failed    
@@ -95,19 +100,19 @@ void guessGame(){
           break;  
       }
 	      
-    }
+    } while (max>0);
     //case1: guess failed
     if (guessFailed) {
-        printf("Game Over. My number was %d\n",number_typedIn);
+        printf("Game Over. PC runs out of attempts. My number was %d\n",number_typedIn);
     }
     //case2: restart
     getchar();    //eat a    "\n" of input buffer   
     printf("Play agian?(y/n)?");
     answer = getchar();
-    if(answer == 78 || answer == 110){
+    if(answer == 'n' || answer == 'N'){
         printf("Bye Bye!! \n");
         return;
-    }else if(answer == 89 || answer == 121){
+    }else if(answer == 'y' || answer == 'Y'){
         guessGame();
     }else{
         printf("\nonly options Y/y/N/n can be recognised\n");
