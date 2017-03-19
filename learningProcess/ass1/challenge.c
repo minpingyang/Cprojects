@@ -4,13 +4,13 @@
 #define START 1
 #define END 100
 #define ATTEMPTS 5
-
-void guessGame();   //declare functions first
+ //declare functions first
+void guessGame();  
 int get_PCguess(const int start, const int end);
 int restTime_showPCGuess(const int attempt);
 int is_game_won(const int secret, const int guess);
 
-
+//declare global variables
 int PCguessNum;
 int max; //**used
 int start;
@@ -24,10 +24,14 @@ int main(){
 }
 int get_PCguess(const int start, const int end){
     max --;
-    srand(time(NULL));
+    srand(time(NULL));  
+    int randomNumber;
+    //make sure randomNumber return the number under the right intervals
+    do{
+      randomNumber = (rand()%end)+start;
+    }while(randomNumber<1 || randomNumber>100);
     
-    int randomNumber = (rand()%end)+start;
-    return randomNumber;
+    return randomNumber;   //return PC guess
 }
 
 
@@ -50,6 +54,7 @@ int is_game_won(const int secret, const int guess){
      printf(" type in (h/H) means your number higher than PC guess\n");
   
     char userHelp;
+   //clean remaining characters of input buffer if character is not l/L or H/h
     do {
       userHelp = getchar();
    } while(userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H');
@@ -62,7 +67,6 @@ int is_game_won(const int secret, const int guess){
     }else if((userHelp == 'h' || userHelp == 'H')&&(guess<secret)){
         printf("my number is higher, PC try again \n");   //H &h
         start = guess;
-       // max --;
     }else {
        printf("You have not given the right hint，Could u next time give the right hint? \n");
     }
