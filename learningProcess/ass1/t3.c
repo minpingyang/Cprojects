@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define START 1
-#define END 100
-#define ATTEMPTS 5
 
 void guess();   //declare functions first
 
@@ -18,20 +15,19 @@ void guess(){
     //
     int number_typedIn;
     srand(time(NULL));
-    //? randomNumber = (rand()%100)+1;
-    int randomNumber = (rand()%END)+START;
-   
+    int randomNumber = (rand()%100)+1;
+    int MAX_TRIES = 5;
     int guessFailed = 1;
-    int restart = 1;
-    char answer;
-    int max = ATTEMPTS;
+    int restart = 1;  // use non-zero integer to represent 'true' to judge if restart game
+    char answer;  //the user response about if restart game 
+    
     // recursion exit condition
-    if(answer == 78 || answer == 110){
+    if(answer == 'n' || answer == 'N'){
         return;
     }
     printf("Pick a integer between 1 and 100. You have max.5 attempts\n");
     
-    while (max>0) {
+    while (MAX_TRIES>0) {
   
     scanf("%d",&number_typedIn);
     printf("Your guess: \"%d\"\n",number_typedIn);
@@ -41,30 +37,32 @@ void guess(){
             break;
         }else if (number_typedIn < randomNumber){
             printf("Hmmm... My number is bigger than yours\n");
-            max --;
+            MAX_TRIES --;
         }
         else{
             printf("Hmmm... My number is smaller than yours\n");
-            max --;
+            MAX_TRIES --;
         }
     }
     //case1: guess failed
     if (guessFailed) {
         printf("Game Over. My number was %d\n",randomNumber);
     }
-    //case2: restart
-    getchar();    //eat a    "\n"
-    
+     
     printf("Play agian?(y/n)?");
-    answer = getchar();
-    if(answer == 78 || answer == 110){
+     //case2: restart
+    //clean wrong character of input buffer 
+    do {
+      answer = getchar();
+      
+   } while(answer != 'y' && answer != 'Y'&& answer != 'n'&& answer !='N');
+    if(answer == 'n' || answer == 'N'){
         printf("Bye Bye!! \n");
         return;
-    }else if(answer == 89 || answer == 121){
+    }else if(answer == 'y' || answer == 'Y'){
         guess();
-    }else{
-        printf("\nonly options Y/y/N/n can be recognised\n");
     }
     
   
 }
+

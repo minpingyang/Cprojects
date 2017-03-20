@@ -4,12 +4,13 @@
 #define START 1
 #define END 100
 #define ATTEMPTS 5
-
-void guess();   //declare functions first
+ //declare functions first
+void guess();  
+int is_game_won(const int secret, const int guess);
 int get_secret(const int start, const int end);
 int get_guess(const int attempt);
+//declare global variables since they are used in mutiple-methods
 int number_typedIn;
-int is_game_won(const int secret, const int guess);
 int max;
 
 int main(){
@@ -28,7 +29,7 @@ int is_game_won(const int secret, const int guess){
   
        if(secret == guess){
             printf("Congradulations! You are so lucky! \n");
-            return 0;
+            return 0;  //'0'represents false in this programme.
             
         }else if (secret < guess){
             printf("Hmmm... My number is bigger than yours\n");
@@ -38,7 +39,7 @@ int is_game_won(const int secret, const int guess){
             printf("Hmmm... My number is smaller than yours\n");
             max --;
         }
-     return 1;
+     return 1;   //"1" represents true in this programme.
   
 }
 
@@ -58,7 +59,7 @@ void guess(){
     char answer;
     max = ATTEMPTS;
     // recursion exit condition
-    if(answer == 78 || answer == 110){
+    if(answer == 'n' || answer == 'N'){
         return;
     }
     printf("Pick a integer between 1 and 100. You have max.5 attempts\n");
@@ -76,20 +77,18 @@ void guess(){
     if (guessFailed) {
         printf("Game Over. My number was %d\n",randomNumber);
     }
-    //case2: restart
-    getchar();    //eat a    "\n"
-    
     printf("Play agian?(y/n)?");
-    answer = getchar();
-    if(answer == 78 || answer == 110){
+     //case2: restart
+    //clean wrong character of input buffer 
+   do {
+      answer = getchar();
+      
+   } while(answer != 'y' && answer != 'Y'&& answer != 'n'&& answer !='N'); 
+    if(answer == 'n' || answer == 'N'){
         printf("Bye Bye!! \n");
         return;
-    }else if(answer == 89 || answer == 121){
+    }else if(answer == 'y' || answer == 'Y'){
         guess();
-    }else{
-        printf("\nonly options Y/y/N/n can be recognised\n");
-	printf("\n you shoud run the program again\n");
     }
-    
   
 }

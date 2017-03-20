@@ -15,7 +15,7 @@ int PCguessNum;
 int max; //**used
 int start;
 int end;
-
+int randomNumber;
 
 int main(){
     
@@ -24,12 +24,9 @@ int main(){
 }
 int get_PCguess(const int start, const int end){
     max --;
-    srand(time(NULL));  
-    int randomNumber;
-    //make sure randomNumber return the number under the right intervals
-    do{
-      randomNumber = (rand()%end)+start;
-    }while(randomNumber<1 || randomNumber>100);
+    
+    randomNumber = (start + end)/2;
+    
     
     return randomNumber;   //return PC guess
 }
@@ -93,6 +90,7 @@ void guessGame(){
    int guessTimesLeft = 0;
    int guessFailed = 1;
    char answer;
+
    printf("The number you chose is:  ");
    scanf("%d",&number_typedIn);      // user types in a number
    
@@ -110,17 +108,19 @@ void guessGame(){
         printf("Game Over. PC runs out of attempts. My number was %d\n",number_typedIn);
     }
     //case2: restart
-    getchar();    //eat a    "\n" of input buffer   
+  //  getchar();    //eat a    "\n" of input buffer   
     printf("Play agian?(y/n)?");
-    answer = getchar();
+    
+  do {
+      answer = getchar();
+      
+   } while(answer != 'y' && answer != 'Y'&& answer != 'n'&& answer !='N');
+    
     if(answer == 'n' || answer == 'N'){
         printf("Bye Bye!! \n");
         return;
     }else if(answer == 'y' || answer == 'Y'){
         guessGame();
-    }else{
-        printf("\nonly options Y/y/N/n can be recognised\n");
-	      printf("\n you shoud run the program again\n");
     }
   
 
