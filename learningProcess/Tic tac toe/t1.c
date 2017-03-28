@@ -16,14 +16,34 @@ int main(){
 }
 void draw(const int size, char field[]){
    int i = 1;
+   // draw "+-"
+  while(i <= size){
+   printf("+-");
+   i++;
+  }
+  printf("+\n");
+  i = 1;
+  // draw "| "
+  while(i <= size){
+   printf("| ");
+   i++;
+  }
+  printf("|\n");
+  i = 1;
+  //draw "+-" 
+  while(i <= size){
+   printf("+-");
+   i++;
+  }
+  printf("+\n");
+  i = 1;
+  //draw number
+  while(i <= size){
+   printf(" %d",i++);
+  }
+  printf(" \n");
   
    
-    printf("+-+\n");
-    printf("| |\n");
-    printf("+-+\n");
-    printf(" %d\n",i);
-   
-  // printf("\n");
 }
 
 int add_cross(const int size, char field[], const int position){
