@@ -24,6 +24,8 @@ int main () {
   
   draw(sizeF,board);
   return 0;
+
+  
 }
 
 
@@ -104,7 +106,7 @@ int is_solved(const int size, char field[][size]){
       for (c = 0; c < size -2 ; c++) {
         int flag1 = field[r][c] == 'X' && field[r][c+1] == 'X' && field[r][c+2] == 'X';
         int flag2 = field[r][c] == 'O' && field[r][c+1] == 'O' && field[r][c+2] == 'O';
-        if(flag1&&flag2){
+        if(flag1||flag2){
           return 1;
         }  
       }
@@ -114,21 +116,79 @@ int is_solved(const int size, char field[][size]){
       for (r = 0; r < size -2 ; r++) {
         int flag1 = field[r][c] == 'X' && field[r+1][c] == 'X' && field[r+2][c] == 'X';
         int flag2 = field[r][c] == 'O' && field[r+1][c] == 'O' && field[r+2][c] == 'O';
-        if(flag1&&flag2){
+        if(flag1||flag2){
           return 1;
         }  
       }
    }
-   //case3 : 3 consecutive same char in dialog
-   for (r = 2; r < size; r++ ){
-      for (c = 2; c < size; c++) {
-        int flag1 = field[r][c] == 'X' && field[r+1][c+1] == 'X' && field[r+1][c+2] == 'X';
-        int flag2 = field[r][c] == 'O' && field[r][c+1] == 'O' && field[r][c+2] == 'O';
-        if(flag1&&flag2){
-          return 1;
-        }  
+    //case3 : 3 consecutive same char in dialog
+   if(size > 2){
+      //central of forward slash dialog case
+     for (r = 0; r < size-2; r++ ){
+         for (c = 0; c < size-2; c++) {
+          int flag1 = field[r][c] == field[r+1][c+1] == field[r+2][c+2] == 'X';
+          int flag2 = field[r][c] == field[r+1][r+1] == field[r+2][r+2] == 'O';
+          if(flag1||flag2){
+            return 1;
+          }  
+        }
+     }
+     //ceteral of back slash dialog case*******************/
+     for (r = 0; r < size-2; r++ ){
+         for (c = size -1; c >= 2; c--) {
+          int flag1 = field[r][c] == field[r+1][c-1] == field[r+2][c-2] == 'X';
+          int flag2 = field[r][c] == field[r+1][c-1] == field[r+2][c-2] == 'O';
+          if(flag1||flag2){
+            return 1;
+          }  
+        }
       }
-   }
+
+    }
+
+    if(size > 3){
+        //(forward slash)check from middle dialog to right most
+       for(r = 0; r < size-3; r++){
+          for (c = 0; c < size-2; c++) {
+            int flag1 = field[r+1][c] == field[r+2][c+1] == field[r+3][c+2] == 'X';
+            int flag2 = field[r+1][c] == field[r+2][c+1] == field[r+3][c+2] == 'O';
+            if(flag1||flag2){
+              return 1;
+            } 
+          }
+       }
+       //(forward slash)check from middle dialog to left most
+       for(r = 0; r < size-3; r++){
+          for (c = 0; c < size-2; c++) {
+            int flag1 = field[r][c+1] == field[r+1][c+2] == field[r+2][c+3] == 'X';
+            int flag2 = field[r][c+1] == field[r+1][c+2] == field[r+2][c+3] == 'O';
+            if(flag1||flag2){
+              return 1;
+            } 
+          }
+       }
+       
+       //(back slash dialog)check from middle dialog to right most
+       for(r = 0; r < size-3; r++){
+          for (c = size -1; c >= 2; c--) {
+            int flag1 = field[r+1][c] == field[r+2][c-1] == field[r+3][c-2] == 'X';
+            int flag1 = field[r+1][c] == field[r+2][c-1] == field[r+3][c-2] == 'O';
+            if(flag1||flag2){
+              return 1;
+            } 
+          }
+       }
+       //(back slash dialog)check from middle dialog to left most
+       for(r = 0; r < size-3; r++){
+          for (c = size -1; c >= 2; c--) {
+            int flag1 = field[r][c-1] == field[r+1][c-2] == field[r+2][c-3] == 'X';
+            int flag2 = field[r][c-1] == field[r+1][c-2] == field[r+2][c-3] == 'O';
+            if(flag1||flag2){
+              return 1;
+            } 
+          }
+       }
+    }
 
 
    return 0;  
