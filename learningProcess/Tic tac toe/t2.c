@@ -3,8 +3,8 @@
 #include <string.h>
 
 void draw(const int size, char field[][size]);
-// int add_cross(const int size, char field[][size], const int position);
-// int is_solved(const int size, char field[][size]);
+int add_cross(const int size, char field[][size], const int x, const int y, const char player);
+int is_solved(const int size, char field[][size]);
 
 int sizeF;
 
@@ -78,12 +78,61 @@ while (tempSize != 0){
   }
   printf(" \n");
   printf(" \n");
- 
- 
+  
 }
 
+int add_cross(const int size, char field[][size], const int x, const int y, const char player){
+   //check if the possition is free
+   
+   if(field[x-1][y-1] == ' ' && x <= size && y <=size){
+    if(player == 'A'){
+      field[x-1][y-1] = 'X';
+    }
+      field[x-1][y-1] = 'O';  
+    return 1;
+   }else if(field[x-1][y-1] != ' '&& x <= size && y <=size){
+    return 0;
+   }
+   return -1;
+
+}
+
+int is_solved(const int size, char field[][size]){
+   int r,c;
+   //case1: 3 consecutive same char in horizontal line
+   for (r = 0; r < size; r++ ){
+      for (c = 0; c < size -2 ; c++) {
+        int flag1 = field[r][c] == 'X' && field[r][c+1] == 'X' && field[r][c+2] == 'X';
+        int flag2 = field[r][c] == 'O' && field[r][c+1] == 'O' && field[r][c+2] == 'O';
+        if(flag1&&flag2){
+          return 1;
+        }  
+      }
+   }
+   //case2: 3 consecutive same char in vertical line
+   for (c = 0; c < size; c++ ){
+      for (r = 0; r < size -2 ; r++) {
+        int flag1 = field[r][c] == 'X' && field[r+1][c] == 'X' && field[r+2][c] == 'X';
+        int flag2 = field[r][c] == 'O' && field[r+1][c] == 'O' && field[r+2][c] == 'O';
+        if(flag1&&flag2){
+          return 1;
+        }  
+      }
+   }
+   //case3 : 3 consecutive same char in dialog
+   for (r = 2; r < size; r++ ){
+      for (c = 2; c < size; c++) {
+        int flag1 = field[r][c] == 'X' && field[r+1][c+1] == 'X' && field[r+1][c+2] == 'X';
+        int flag2 = field[r][c] == 'O' && field[r][c+1] == 'O' && field[r][c+2] == 'O';
+        if(flag1&&flag2){
+          return 1;
+        }  
+      }
+   }
 
 
+   return 0;  
+}
 
 
 // int main(){
