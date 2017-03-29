@@ -130,7 +130,7 @@ int is_solved(const int size, char field[]){
    }
 
    return 0;
-
+//
 }
 
 
