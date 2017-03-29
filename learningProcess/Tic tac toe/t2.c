@@ -6,9 +6,10 @@ void draw(const int size, char field[][size]);
 // int add_cross(const int size, char field[][size], const int position);
 // int is_solved(const int size, char field[][size]);
 
+int sizeF;
 
 int main () {
-  int sizeF;
+
 
   printf("Enter the size of field: ");
   scanf("%d",&sizeF);
@@ -33,39 +34,34 @@ int main () {
 
 void draw(const int size, char field[][size]){
 
-  if (size == 0){return;}
+int i;
+int tempSize = size;
+while (tempSize != 0){
+    int i = 1;    
+    //draw a ' ' in each literate. 
+    printf(" ");
 
+     // draw "+-"
+    while(i <= size){
+     printf("+-");
+     i++;
+    }
+    printf("+\n");
+    i = 0;
+    
+   
+    // draw a size number in each literate
+    printf("%d",tempSize);
 
+    // draw "| "
+    while(i < size){
+     printf("|%c",field[i++][tempSize-1]);
+    }
+    printf("|\n");
+    tempSize--;
+}
 
-
-  int i = 1;    
-  
-
-  //draw a ' ' in each literate. 
   printf(" ");
-
-   // draw "+-"
-  while(i <= size){
-   printf("+-");
-   i++;
-  }
-  printf("+\n");
-  i = 0;
-  
- 
-  // draw a size number in each literate
-  printf("%d",size);
-
-  // draw "| "
-  while(i < size){
-   printf("|%c",field[i++][size-1]);
-  }
-  printf("|\n");
-  
-  //recursively call this method
-  int tempSize2 = size - 1;
-  draw(tempSize2,field[][tempSize]);
-
   i = 1;  
   //draw "+-" 
   while(i <= size){
@@ -75,7 +71,7 @@ void draw(const int size, char field[][size]){
   printf("+\n");
   i = 1;
 
-
+  printf(" ");
   //draw number (left to right)
   while(i <= size){
    printf(" %d",i++);
