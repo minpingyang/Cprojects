@@ -9,7 +9,10 @@ int is_solved(const int size, char field[][size]);
 int sizeF;
 
 int main () {
-
+  int isSolved = 0; //a flag judge if game solve
+  int insertPositionRow = 0;
+  int insertPositionCol = 0;
+  int doesAddCross = 1;
 
   printf("Enter the size of field: ");
   scanf("%d",&sizeF);
@@ -21,8 +24,55 @@ int main () {
       board[r][c] = ' ';
     }     
   }
-  
   draw(sizeF,board);
+     while(isSolved == 0){     
+      if(doesAddCross == 1){
+          printf("Player A: " );
+              printf("choose row: ");
+              scanf("%d",&insertPositionRow);
+              printf("choose col: ");
+              scanf("%d",&insertPositionCol);
+
+            //now the board array initialized with space
+          doesAddCross = add_cross(sizeF, board,insertPositionRow,insertPositionCol,'A');
+          
+          if (doesAddCross == 1) {
+            draw(sizeF, board);
+          }
+
+          isSolved = is_solved(sizeF,board);
+          if (isSolved == 1){
+            printf("Player A won\n");
+            break;
+          }
+          printf("Player B: " );
+           printf("choose row: ");
+              scanf("%d",&insertPositionRow);
+              printf("choose col: ");
+              scanf("%d",&insertPositionCol);
+
+          doesAddCross = add_cross(sizeF, board,insertPositionRow,insertPositionCol,'B');    
+          
+          if (doesAddCross == 1) {
+            draw(sizeF, board);
+          }
+
+          isSolved = is_solved(sizeF,board);
+          if (isSolved == 1){
+            printf("Player B won\n");
+            break;
+          }
+
+      }else if (doesAddCross == 0 ){
+          printf("X is already there!\n"); 
+          doesAddCross = 1;
+      }else if (doesAddCross == -1) {
+             printf("Wrong position!\n");
+          doesAddCross = 1;
+      }
+   }    
+
+
   return 0;
 
 
