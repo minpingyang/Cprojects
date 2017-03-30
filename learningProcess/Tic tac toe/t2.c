@@ -139,10 +139,11 @@ int add_cross(const int size, char field[][size], const int x, const int y, cons
    if(field[x-1][y-1] == ' ' && x <= size && y <=size){
     if(player == 'A'){
       field[x-1][y-1] = 'X';
+    }else{
+      field[x-1][y-1] = 'O';
     }
-      field[x-1][y-1] = 'O';  
-    return 1;
-   }else if(field[x-1][y-1] != ' '&& x <= size && y <=size){
+      return 1;   
+   }else if((field[x-1][y-1] == 'X'||field[x-1][y-1] == 'O')&& x <= size && y <=size){
     return 0;
    }
    return -1;
