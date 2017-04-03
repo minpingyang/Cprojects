@@ -5,7 +5,7 @@
 void draw(const int size, char field[]);
 int add_cross(const int size, char field[], const int position);
 int is_solved(const int size, char field[]);
-
+void checkAdding(const int add_cross,const int size,char field[]);
 
 
 
@@ -30,15 +30,13 @@ int main(){
     draw(sizeF, board);  //  draw initial board
 
    while(isSolved == 0){     
-      if(doesAddCross == 1){
+      
           printf("Player A: " );
           scanf("%d",&insertPosition);
-            //now the board array initialized with space
+           
           doesAddCross = add_cross(sizeF,board,insertPosition);
           
-          if (doesAddCross == 1) {
-            draw(sizeF, board);
-          }
+          checkAdding(doesAddCross,sizeF,board);
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -49,9 +47,7 @@ int main(){
           scanf("%d",&insertPosition);
           doesAddCross = add_cross(sizeF,board,insertPosition);      
           
-          if (doesAddCross == 1) {
-            draw(sizeF, board);
-          }
+          checkAdding(doesAddCross,sizeF,board);
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -59,17 +55,23 @@ int main(){
             break;
           }
 
-      }else if (doesAddCross == 0 ){
-          printf("X is already there!\n"); 
-          doesAddCross = 1;
-      }else if (doesAddCross == -1) {
-             printf("Wrong position!\n");
-          doesAddCross = 1;
-      }
    }    
     
    
     return 0;
+}
+
+void checkAdding(const int add_cross,const int size,char field[]){
+ 
+   if (add_cross == 1) {
+            draw(size, field);
+    }else if (add_cross == 0 ){
+            printf("X is already there!\n"); 
+
+    }else if (add_cross == -1) {
+              printf("Wrong position!\n");
+    }
+
 }
 void draw(const int size, char field[]){
 
@@ -108,7 +110,7 @@ void draw(const int size, char field[]){
 int add_cross(const int size, char field[], const int position){
    //check if the possition is free
    
-   if(field[position-1] == ' ' && position <= size){
+   if(field[position-1] == ' ' && position <= size && position > 0){
     field[position-1] = 'X';
     // draw(size, field);
     return 1;

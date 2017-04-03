@@ -7,6 +7,7 @@ void draw(const int size, char field[][size]);
 int add_cross(const int size, char field[][size], const int x, const int y, const char preferChar);
 int is_solved(const int size, char field[][size]);
 void make_turn(const int size, char field[][size]);
+void checkAdding(const int add_cross,const int size,char field[][size]);
 
 int sizeF;
 char humanChar; //(x/o)
@@ -37,20 +38,18 @@ int main () {
           
 
      while(isSolved == 0){     
-      if(doesAddCross == 1){
+
           printf("Human Player: \n" );
     
-              printf("what row you wana choose: ");
-              scanf("%d",&insertPositionRow);
-              printf("what col you wana choose: ");
-              scanf("%d",&insertPositionCol);
+              printf("Input (row number + space + col number): ");
+              scanf("%d %d",&insertPositionRow,&insertPositionCol);
+              printf("row: %d  col: %d\n",insertPositionRow,insertPositionCol);
+             
 
             //now the board array initialized with space
           doesAddCross = add_cross(sizeF, board,insertPositionRow,insertPositionCol,humanChar);
           
-          if (doesAddCross == 1) {
-            draw(sizeF, board);
-          }
+          checkAdding(doesAddCross,sizeF,board);
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -64,6 +63,7 @@ int main () {
            printf("PC choose col: %d\n",insertPositionCol);  
            draw(sizeF, board);
           
+          checkAdding(doesAddCross,sizeF,board);
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -71,18 +71,21 @@ int main () {
             break;
           }
 
-      }else if (doesAddCross == 0 ){
-          printf("X is already there!\n"); 
-          doesAddCross = 1;
-      }else if (doesAddCross == -1) {
-             printf("Wrong position!\n");
-          doesAddCross = 1;
-      }
    }    
 
 
   return 0;
+}
 
+void checkAdding(const int add_cross,const int size,char field[][size]){
+   if (add_cross == 1) {
+            draw(size, field);
+          }else if (add_cross == 0 ){
+            printf("A character is already there!\n"); 
+            
+          }else if (add_cross == -1) {
+              printf("Wrong position!\n");             
+          }
 
 }
 //This  function   will  serve   as  the   PC  opponent  to  the   human   player.
@@ -161,7 +164,7 @@ while (tempSize != 0){
 int add_cross(const int size, char field[][size], const int x, const int y, const char preferChar){
    //check if the possition is free
    
-   if(field[x-1][y-1] == ' ' && x <= size && y <=size){
+   if(field[x-1][y-1] == ' ' && x <= size && y <=size && x > 0 && y >0){
     if(preferChar == 'X'|| preferChar == 'x'){
       field[x-1][y-1] = 'X';
     }else if(preferChar == 'O'|| preferChar == 'o'){

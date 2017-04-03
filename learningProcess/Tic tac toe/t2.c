@@ -5,7 +5,7 @@
 void draw(const int size, char field[][size]);
 int add_cross(const int size, char field[][size], const int x, const int y, const char player);
 int is_solved(const int size, char field[][size]);
-void checkAdding(int add_cross,const int size,char field[][size]);
+void checkAdding(const int add_cross,const int size,char field[][size]);
 
 int sizeF;
 
@@ -37,15 +37,7 @@ int main () {
             //now the board array initialized with space
           doesAddCross = add_cross(sizeF, board,insertPositionRow,insertPositionCol,'A');
           checkAdding(doesAddCross,sizeF,board);
-          // if (doesAddCross == 1) {
-          //   draw(sizeF, board);
-          // }else if (doesAddCross == 0 ){
-          //   printf("X is already there!\n"); 
-          //   doesAddCross = 1;
-          // }else if (doesAddCross == -1) {
-          //     printf("Wrong position!\n");
-          //     doesAddCross = 1;
-          // }
+    
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -61,15 +53,6 @@ int main () {
           doesAddCross = add_cross(sizeF, board,insertPositionRow,insertPositionCol,'B');    
           
           checkAdding(doesAddCross,sizeF,board);
-          // if (doesAddCross == 1) {
-          //     draw(sizeF, board);
-          // }else if (doesAddCross == 0 ){
-          //     printf("X is already there!\n"); 
-          //     doesAddCross = 1;
-          // }else if (doesAddCross == -1) {
-          //     printf("Wrong position!\n");
-          //     doesAddCross = 1;
-          // }
 
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
@@ -84,16 +67,15 @@ int main () {
 
 }
 
-void checkAdding(int add_cross,const int size,char field[][size]){
+void checkAdding(const int add_cross,const int size,char field[][size]){
    if (add_cross == 1) {
             draw(size, field);
-          }else if (add_cross == 0 ){
-            printf("X is already there!\n"); 
-            add_cross = 1;
-          }else if (add_cross == -1) {
-              printf("Wrong position!\n");
-              add_cross = 1;
-          }
+    }else if (add_cross == 0 ){
+            printf("A character is already there!\n"); 
+            
+    }else if (add_cross == -1) {
+              printf("Wrong position!\n");             
+    }
 
 }
 
@@ -150,7 +132,7 @@ while (tempSize != 0){
 int add_cross(const int size, char field[][size], const int x, const int y, const char player){
    //check if the possition is free
    
-   if(field[x-1][y-1] == ' ' && x <= size && y <=size){
+   if(field[x-1][y-1] == ' ' && x <= size && y <=size && x > 0 && y >0){
     if(player == 'A'){
       field[x-1][y-1] = 'X';
     }else{
