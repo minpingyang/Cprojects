@@ -61,7 +61,7 @@ int main () {
 
            printf("PC choose row: %d\n",insertPositionRow);
            printf("PC choose col: %d\n",insertPositionCol);  
-           draw(sizeF, board);
+          // draw(sizeF, board);
           
           checkAdding(doesAddCross,sizeF,board);
 
@@ -180,9 +180,10 @@ int add_cross(const int size, char field[][size], const int x, const int y, cons
 
 int is_solved(const int size, char field[][size]){
    int r,c;
-   for(r = 0 ; r < size; r++){
-    for(c = 0; c < size; c++) {
-      
+   for(r = 1 ; r < size-1; r++){
+    for(c = 1; c < size-1; c++) {
+         //if every three of ajacency character are same in one of four directions, then return true;
+
       if(field[r][c] == 'X' || field[r][c] == 'O'){
         int flag1 = ((field[r][c] == field[r-1][c-1]) && (field[r][c] == field[r+1][c+1]));
         if(flag1){return 1;} //dialog
@@ -191,7 +192,7 @@ int is_solved(const int size, char field[][size]){
         int flag3 = ((field[r][c] == field[r-1][c]) && (field[r][c] == field[r+1][c]));
         if(flag3){return 1;} //horizontal check
         int flag4 = ((field[r][c] == field[r][c-1]) && (field[r][c] == field[r][c+1]));
-        if(flag4){return 1;}
+        if(flag4){return 1;} //vertial check
       }
     }
   }

@@ -151,15 +151,21 @@ int is_solved(const int size, char field[][size]){
    for(r = 0 ; r < size; r++){
     for(c = 0; c < size; c++) {
       
+      //if every three of ajacency character are same in four directions, then return true;
       if(field[r][c] == 'X' || field[r][c] == 'O'){
         int flag1 = ((field[r][c] == field[r-1][c-1]) && (field[r][c] == field[r+1][c+1]));
-        if(flag1){return 1;} //dialog
+        if(flag1){
+         
+        return 1;} //dialog
         int flag2 = ((field[r][c] == field[r-1][c+1]) && (field[r][c] == field[r+1][c-1]));
-        if(flag2){return 1;}//antidialog
+        if(flag2){
+        return 1;}//antidialog
         int flag3 = ((field[r][c] == field[r-1][c]) && (field[r][c] == field[r+1][c]));
-        if(flag3){return 1;} //horizontal check
+        if(flag3){
+        return 1;} //horizontal check
         int flag4 = ((field[r][c] == field[r][c-1]) && (field[r][c] == field[r][c+1]));
-        if(flag4){return 1;}
+        if(flag4){
+        return 1;} //vertial check
       }
     }
   }
