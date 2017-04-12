@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <string.h>
 int main()
 
 {	
@@ -22,17 +22,91 @@ int main()
 
 	//C supports a format specification known as the edit se conversion code %[..]
 	//-it can be used to read a line containing a variety of characters,including white space
-	char str [1];
-	printf("Enter a string :\n");
-	scanf("%3[^' ']",str);
-	printf("0:%c\n",str[0]);
+	// char str [1];
+	// printf("Enter a string :\n");
+	// scanf("%3[^' ']",str);
+	// printf("0:%c\n",str[0]);
 	
-	printf("%2s\n",str);
+	// printf("%2s\n",str);
 	//always use the width field to limit the maximum number of characters to read with "%s" and "%[..]" in all production quality code!
 	//-No exceptions!
 
+	//gets() is used to scan a line of text from a standard input device
+	//The gets() function will be terminated by newline character
+	//the newline character won't be included as part of the string
+	//the string may include white space characters
+	//\0 is always appended to the end of the string of stored characters;
+	//reading strings character by character
+	//read in hcaracter by character is useful when
+	//-you don't know how long the string might be
+	//-or if you want to consider other stopping conditions besodes spaces and newLines
+	//eg. stop on periods, or when two successive slashes //are envountered
+	//The scanf() format specifier for reading individual character is %c
+	//-here you must use & symbol
+	// if a width greater than 1 is given (%2c).then multiple characters are read,
+	//???????????and stored in successive, and stored in successive positions in a char array???
+	//sscanf() and sprintf() are used for the same goal,but instead of the standard input/output they use strings
+	//one of their main advantage is when you need to prepare a string for later use
+	//The ctype.h header
+	//ctype.h declares a set of functions to classify and transform individula chars
+	//#include<ctype.h> is required to use any of these functions
+	//some of the more commonly used functions:
+	//-isupper() --checks if a character is an uppercase letter
+	// a value different from zero is returned if the character is an uppercase alphabetic letter, zero otherwised
+	//-toupper() -converts a character to its uppercase equivalent if the character is an lowercase
+	//if no such conversion is possible, the returned value is unchanged
+	//#include<string.h> defines several functions to manipulate null-byte terminated arrays of chars
+	//-#include <string,h> is required to use any of these fuctions
+	//-strcpy() --
+	//strcat() -----concatenates (appends) source to the end of destination 
+	//strlen()  --returns length of the string,not counting the \0;
+	//
+	// char str[15];
+	// printf("Enter your name: \n");
+	// gets(str);
+	// printf("%s\n",str );
 
 
+
+//Copy string
+// Copies the C string pointed by source into the array pointed by 
+	// destination, including the terminating null character (and 
+	// 	stopping at that point).
+
+	// char str1[]="Sample string";
+ //  	char str2[40];
+ //  	char str3[40];
+ //  	strcpy (str2,str1);
+ //  	strcpy (str3,"copy successful");
+ //  	printf ("str1: %s\nstr2: %s\nstr3: %s\n",str1,str2,str3);
+ 
+ //Concatenate strings	
+// Appends a copy of the source string to the destination string. 
+//The terminating null character in destination is overwritten by
+// the first character of source, and a null-character is included
+// at the end of the new string formed by the concatenation of both
+// in destination.
+
+// destination and source shall not overlap.
+
+  	// char str[80];
+  	// strcpy (str,"these ");
+  	// strcat (str,"strings ");
+  	// strcat (str,"are ");
+  	// strcat (str,"concatenated.");
+  	// printf("%s\n",str );
+  	// puts (str);
+
+
+	  char key[] = "apple";
+	  char buffer[80];
+	  do {
+	     printf ("Guess my favorite fruit? ");
+	     fflush (stdout);
+	     scanf ("%79s",buffer);
+	  } while (strcmp (key,buffer) != 0);
+	  puts ("Correct answer!");
+  
 	// char str[]="This is an ";
 	// printf("%s",str);
 	// puts("example string.");
