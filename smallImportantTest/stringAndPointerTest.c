@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 int main()
 
 {	
@@ -60,12 +61,14 @@ int main()
 	//-strcpy() --
 	//strcat() -----concatenates (appends) source to the end of destination 
 	//strlen()  --returns length of the string,not counting the \0;
-	//
+	//strcmp(s1,s2) -0 negative positive   first-second
 	// char str[15];
 	// printf("Enter your name: \n");
 	// gets(str);
 	// printf("%s\n",str );
-
+	//stdlib.h defines several functions including searching, sorting and converting
+	//-#include <stdlib.h> is required to use any of tehse functions
+	//coomon used atoi(),atof(),atol(),atoll()parses a stirn of numeric characters into a number of type int,double,long int,long long int.
 
 
 //Copy string
@@ -101,12 +104,26 @@ int main()
 	  char key[] = "apple";
 	  char buffer[80];
 	  do {
+
 	     printf ("Guess my favorite fruit? ");
 	     fflush (stdout);
+	     //sleep(1);
 	     scanf ("%79s",buffer);
+	      printf("%d\n",strcmp (key,buffer));
 	  } while (strcmp (key,buffer) != 0);
 	  puts ("Correct answer!");
-  
+  	
+
+	  // int     i;
+   //      for( i=0; i<12; i++ )
+   //      {
+   //              printf( "a" );
+   //              // fflush( stdout ); //输出并清空
+   //              sleep( 1 );
+   //      }
+
+        
+
 	// char str[]="This is an ";
 	// printf("%s",str);
 	// puts("example string.");
