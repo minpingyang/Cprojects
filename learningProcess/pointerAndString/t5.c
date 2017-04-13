@@ -34,6 +34,17 @@ void trim(char *str, char *dst) {
 		}
 		
 	}
+	//check if exist trailling space after the string
+	//remove the trailling space
+	dst--;
+	while(*dst == ' '){
+			dst--;
+	}
+	
+	dst++;
 	*dst ='\0';
+	
+	
+	
 	
 }
