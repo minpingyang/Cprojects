@@ -15,7 +15,7 @@ void contact1(char *str1,char * str2){
 	
 
 	char *conc = str2;
-	//delet leading space
+	
 	
 	while(*str1 != '\0'){
 		if(*str1 == ' '){			
