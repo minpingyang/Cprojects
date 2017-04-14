@@ -20,6 +20,23 @@ int main() {
 
 void trim(char *str, char *dst) {
     // TODO – here you implement your trimmer function 
+
+  //replace all leadings tabs with spaces ;  
+	char *replaceTab = str;  /* Destination to copy to */
+	while(*str != '\0'){
+		if(*str == '\t'){
+			*str = ' ';
+			str++;
+		}else{
+			str++;
+		}
+
+	}
+
+	str =replaceTab;
+
+
+ //remove all spaces;
    char* oneSpace = dst;   /* Destination to copy to */
     int removeLeading = 0;
 	while(*str != '\0'){
@@ -35,7 +52,7 @@ void trim(char *str, char *dst) {
 		}
 		
 	}
-	//check if exist trailling space after the string
+	
 	//remove the trailling space
 	dst--;
 	while(*dst == ' '){
@@ -49,7 +66,8 @@ void trim(char *str, char *dst) {
 
 	dst = oneSpace;
 	char* source = dst;
-	
+
+ //replace all tabs of the string with spaces ;  
 	while(*dst != '\0'){
 		if(*dst == '\t'){
 			*dst = ' ';
@@ -61,7 +79,7 @@ void trim(char *str, char *dst) {
 	}
 
 	dst = source;
-
+// remove multiple space with single space;
     /* While we're not at the end of the string, loop... */
     while (*dst != '\0')
     {

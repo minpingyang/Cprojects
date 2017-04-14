@@ -9,13 +9,13 @@ int main() {
 	// TODO – the names of the variables are strp and strq
 	char *strp;
 	char strq[SIZE];
-	
+	printf("!!!Enter a string with spaces : \n");
 	gets(strp);
 	printf("Original strp: [%s]\n", strp);
 	spacedel_ptr(strp);
 	printf("Spaceless strp: [%s]\n", strp);
 
-
+	printf("!!!Enter a string with spaces : \n");
 	gets(strq);
 	printf("Original strq: [%s]\n", strq);
 	spacedel_ary(strq);
