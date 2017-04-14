@@ -50,6 +50,17 @@ void trim(char *str, char *dst) {
 	dst = oneSpace;
 	char* source = dst;
 	
+	while(*dst != '\0'){
+		if(*dst == '\t'){
+			*dst = ' ';
+			dst++;
+		}else{
+			dst++;
+		}
+
+	}
+
+	dst = source;
 
     /* While we're not at the end of the string, loop... */
     while (*dst != '\0')
