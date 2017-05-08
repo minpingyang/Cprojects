@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "k.h"
+
 int main(){
 	
     struct game current_game;
@@ -15,6 +16,8 @@ int main(){
     }
     // initial score
     ptr_game->score = 0;
+    
+    add_random_tile(ptr_game);
     render(current_game);
         
     return 0;
