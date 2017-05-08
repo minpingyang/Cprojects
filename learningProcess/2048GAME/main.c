@@ -40,9 +40,13 @@ int main(){
 	    
 	    //update the board(i.e. slide title),according to input character
 	    //left -> (0,-1)  right->(0,1) up ->(-1,0)  down(1,0)
-	   	
+	   	//right
 	   	if(answer == 'd'|| answer == 'D'){
 	   	   doesUpdate = update(ptr_game,0,1);
+	   	}
+	   	//left
+	   	else if(answer == 'a'|| answer == 'A'){
+	   	   doesUpdate = update(ptr_game,0,-1);
 	   	}
 	   	
 	   	//if update successfully, then render board again

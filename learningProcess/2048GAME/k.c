@@ -150,14 +150,15 @@ bool update(struct game* game, int dy, int dx)
 	//check if possible to move
 	//???
 	bool isMove = is_move_possible(*game);
-	
+	int i,j,b,count; // index
+
 	if(isMove){
 		//move right most
 		if(dx == 1)
 		{
 
 			//move everything to right
-			int i,j,b,count;
+			
             for(i = 0; i <4; i++ ){
 				for(j= 0, count =0; j < 4 && count < 4; j++, count++ ){
 
@@ -270,8 +271,122 @@ bool update(struct game* game, int dy, int dx)
 			}
 			return true;
 		}
-
+/******move left *************/
 		else if(dx == -1){
+			//move everything to left
+            for(i = 0; i <4; i++ ){
+				for(j= 0, count =0; j < 4 && count < 4; j++, count++ ){
+
+					//go through form left to right
+					//if there is a space, then move everything left by one step
+					if(game -> board[i][j] == ' '){
+							// there is a space now
+							b = j;
+							while(b<3){
+								game ->board[i][b] = game ->board[i][b+1];
+								b++;
+							}
+							//current right most tile should be empty	
+							game ->board[i][3] = ' ';
+							j--;
+
+					}
+					
+				}
+			}
+			//merge
+			//check from left to right
+			
+			for(i = 0; i <4; i++ )
+			{
+				for(j= 0; j < 3; j++)
+				{
+						//check from left to right					
+							if(game ->board[i][j] == game ->board[i][j+1] && game ->board[i][j] != ' '  )
+							{
+								
+								if(game ->board[i][j] == 'A'){
+									game ->board[i][j] = 'B';
+									game ->board[i][j+1] = ' ';
+									j++;	
+									game ->score += 2;
+								}else if(game ->board[i][j] == 'B') {
+									game ->board[i][j] = 'C';
+									game ->board[i][j+1] = ' ';
+									j++;	
+									game ->score += 4;								
+								}else if(game ->board[i][j] == 'C') {
+									game ->board[i][j] = 'D';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 8;									
+								}else if(game ->board[i][j] == 'D') {
+									game ->board[i][j] = 'E';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 16;									
+								}else if(game ->board[i][j] == 'E') {
+									game ->board[i][j] = 'F';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 32;										
+								}else if(game ->board[i][j] == 'F') {
+									game ->board[i][j] = 'G';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 64;										
+								}else if(game ->board[i][j] == 'G') {
+									game ->board[i][j] = 'H';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 128;										
+								}else if(game ->board[i][j] == 'H') {
+									game ->board[i][j] = 'I';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 256;										
+								}else if(game ->board[i][j] == 'I') {
+									game ->board[i][j] = 'J';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 512;										
+								}else if(game ->board[i][j] == 'J') {
+									game ->board[i][j] = 'K';
+									game ->board[i][j+1] = ' ';
+									j++;
+									game ->score += 1024;										
+								}
+								//from left to right, the second one is changed to space
+								game ->board[i][j] = ' ';
+							}
+										
+				}
+
+			}
+			//move everything to left again
+             for(i = 0; i <4; i++ ){
+				for(j= 0, count =0; j < 4 && count < 4; j++, count++ ){
+
+					//go through form left to right
+					//if there is a space, then move everything left by one step
+					if(game -> board[i][j] == ' '){
+							// there is a space now
+							b = j;
+							while(b<3){
+								game ->board[i][b] = game ->board[i][b+1];
+								b++;
+							}
+							//current right most tile should be empty	
+							game ->board[i][3] = ' ';
+							j--;
+
+					}
+					
+				}
+			}
+			return true;
+
+
 		
 		}
 		//move up
