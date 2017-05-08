@@ -33,7 +33,7 @@ void render(const struct game game){
 		int row=0, col= 0;
 		int size = 4; //board size
 		//print out the score
-		printf("\nscore: %d\n\n",game.score);
+		printf("\n\nscore: %d\n",game.score);
 		//draw one row of board throught the loop, line by line 
 		while (row < size){
 		    
@@ -79,12 +79,12 @@ void render(const struct game game){
  */
 bool is_move_possible(const struct game game){
     
-    int i = 0, j = 0;
+    int i, j;
     for(i = 0; i <4; i++ ){
         for(j= 0; j < 4; j++){
             //check two adjacent tiles same kind horizontally
             if(j<3){
-                if(game.board[i][j] == game.board[i][j+1] && game.board[i][j] != ' '  ){
+                if(game.board[i][j] == game.board[i][j+1] && game.board[i][j] != ' '){
                     return true;
                 }
             }
@@ -185,9 +185,7 @@ bool update(struct game* game, int dy, int dx)
 			{
 				for(j= 3; j > 0; j--)
 				{
-						//check from left to right
-
-						if(j<3){
+						//check from right to left					
 							if(game ->board[i][j] == game ->board[i][j-1] && game ->board[i][j] != ' '  )
 							{
 								
@@ -197,7 +195,7 @@ bool update(struct game* game, int dy, int dx)
 									j--;	
 									game ->score += 2;
 								}else if(game ->board[i][j] == 'B') {
-									game ->board[i][j] = 'B';
+									game ->board[i][j] = 'C';
 									game ->board[i][j-1] = ' ';
 									j--;	
 									game ->score += 4;								
@@ -245,7 +243,7 @@ bool update(struct game* game, int dy, int dx)
 
 								game ->board[i][j] = ' ';
 							}
-						}				
+										
 				}
 
 			}
@@ -270,6 +268,7 @@ bool update(struct game* game, int dy, int dx)
 					
 				}
 			}
+			return true;
 		}
 
 		else if(dx == -1){
