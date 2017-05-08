@@ -32,15 +32,13 @@ void render(const struct game game){
 
 		int row=0, col= 0;
 		int size = 4; //board size
-
+		//print out the score
+		printf("\nscore: %d\n\n",game.score);
 		//draw one row of board throught the loop, line by line 
 		while (row < size){
 		    
-		    //print out the score
-		    printf("score: %d\n",game.score);
-		    //draw a ' ' in each literate. 
-		    printf(" "); // leave a space from left edge
-
+		    
+		    
 		     // draw "+-"
 		    col = 0;
 		    while(col < size){
@@ -53,13 +51,15 @@ void render(const struct game game){
 		   	col = 0; //reset index
 		    // draw first row 
 		    while(col < size){
+		     
 		     printf("|%c",game.board[row][col]);
+		     col++;
 		    }    
 		    printf("|\n");
 		    row++;
 		}
 		//draw the bottom edege of the board
-		  printf(" ");
+		 
 		  col = 0;  
 		  //draw "+-" 
 		  while(col < size){
@@ -67,7 +67,7 @@ void render(const struct game game){
 		   col++;
 		  }
 		  printf("+\n\n");
-		  		
+	
 }
 /**
  * Checks whether it is possible to make move
@@ -290,9 +290,4 @@ bool update(struct game* game, int dy, int dx)
 }
 
 
-int main(){
-        
-        render(game);
-        
-        return 0;
-}
+
