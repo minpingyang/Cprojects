@@ -48,6 +48,10 @@ int main(){
 	   	else if(answer == 'a'|| answer == 'A'){
 	   	   doesUpdate = update(ptr_game,0,-1);
 	   	}
+	   	//down
+	   	else if(answer == 's'|| answer == 'S'){
+	   	   doesUpdate = update(ptr_game,1,0);
+	   	}
 	   	
 	   	//if update successfully, then render board again
 	    if (doesUpdate)
