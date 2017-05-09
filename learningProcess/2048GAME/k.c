@@ -3,6 +3,42 @@
 #include <time.h>
 #include "k.h"
 
+bool is_Space(const struct game current_game){
+  int i,j;
+    for(i = 0; i <4; i++ )
+    {
+        for(j= 0; j < 4; j++)
+        {
+            if(current_game.board[i][j] == ' ')
+            {
+                return true;
+            }
+            
+        }
+    }
+    return false;
+}
+
+bool compareBoard(const struct game copy_game, const struct game current_game){
+	if(copy_game.score != current_game.score){
+		return true;
+	}
+	int i,j;
+    for(i = 0; i <4; i++ )
+    {
+        for(j= 0; j < 4; j++)
+        {
+            if(current_game.board[i][j] != copy_game.board[i][j])
+            {
+                return true;
+            }
+            
+        }
+    }
+    return false;
+}
+
+
 
 /**
  * Adds random A or B tile to the game
@@ -115,6 +151,7 @@ bool is_move_possible(const struct game game){
 bool is_game_won(const struct game game)
 {
     
+
     //check if there is a character on the board
     int i,j;
     for(i = 0; i <4; i++ )

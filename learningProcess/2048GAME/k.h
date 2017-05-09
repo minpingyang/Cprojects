@@ -8,6 +8,14 @@ struct game {
 };
 
 
+//check if the board has any space avaiable;
+bool is_Space(const struct game current_game);
+/**
+compare two struct 
+*/
+bool compareBoard(const struct game copy_game, const struct game current_game);
+
+
 /**
  * Adds random A or B tile to the game
  * This is very dumb function. The board must have at least one empty tile. If 
