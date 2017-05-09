@@ -96,6 +96,7 @@ int main(){
 	   	does_Move = is_move_possible(current_game); // check if it is possible to move
 	   	doesWin  = is_game_won(current_game);
 	   	if(doesWin){
+	   		render(current_game);
 	   		printf("You win!\n");
 	   		return 0;
 	   	} 
