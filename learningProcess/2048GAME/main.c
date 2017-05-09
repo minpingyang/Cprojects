@@ -2,6 +2,7 @@
 #include "k.h"
 
 int main(){
+	char answer =' '; // user input to slide titles;
 	bool isContent_Changed = false;
 	bool isSpace = true;
 	bool doesUpdate=false;// does board updated ----> if it is, then render board again
@@ -28,9 +29,11 @@ int main(){
 
     //if it is possible to move further, then generate a random number into board
     bool moveNotChanged = false;
+    add_random_tile(ptr_game);
+	render(current_game);
 
     while(does_Move){
-      if (!moveNotChanged)
+      if (!moveNotChanged&& answer == 'N')
       {
 	      //if it is possible to move further, then generate a random number into board
 	      printf("\nPossible to move, so add an random title\n");
@@ -41,7 +44,7 @@ int main(){
 
 
       beforeMove_game = current_game;
-	  char answer; // user input to slide titles;
+	 
 	  printf("input (w,a,s,d) below to slide titles\n");
 	    do {
 	      answer = getchar();
@@ -55,21 +58,25 @@ int main(){
 	   	if(answer == 'd'|| answer == 'D'){
 	   		 printf("\nMove titles to right\n");
 	   	   doesUpdate = update(ptr_game,0,1);
+	   	   answer = 'N'; // allow to add random
 	   	}
 	   	//left
 	   	else if(answer == 'a'|| answer == 'A'){
 	   	   printf("\nMove titles to left\n");
 	   	   doesUpdate = update(ptr_game,0,-1);
+	   	   answer = 'N'; // allow to add random
 	   	}
 	   	//down
 	   	else if(answer == 's'|| answer == 'S'){
 	   		 printf("\nMove titles to bottom\n");
 	   	   doesUpdate = update(ptr_game,1,0);
+	   	   answer = 'N'; // allow to add random
 	   	}
 	    //up
 	   	else if(answer == 'w'|| answer == 'W'){
 	   		 printf("\nMove titles to top\n");
 	   	   doesUpdate = update(ptr_game,-1,0);
+	   	   answer = 'N'; // allow to add random
 	   	}
 	   	does_Move = is_move_possible(current_game); // check if it is possible to move
 	   	doesWin  = is_game_won(current_game);
@@ -94,10 +101,10 @@ int main(){
 	    //if it is possbile to move, and content of board is not changed
 	    else if (does_Move && !isContent_Changed)
 	    {	
-	    	if(!isSpace){
+	    	
 		    	moveNotChanged = true;
 		    	printf("You should changed to other direction to move titles\n");	
-	    	}
+	    	
 	    	
 	    }
     }
@@ -108,28 +115,3 @@ int main(){
 }
 
 
-
-   //  //add random A/B in board then render board
-   //  add_random_tile(ptr_game);
-   //  render(current_game);
-   //  //read user input character
-   //  char answer; // user input to slide titles;
-   //  printf("input (w,a,s,d) below to slide titles\n");
-   //  do {
-   //    answer = getchar();
-      
-   // } while(answer != 'w' && answer != 'W'&& answer != 'a'&& answer !='A'
-   // 		&&answer != 's' && answer != 'S'&& answer != 'd'&& answer !='D');
-    
-   //  //update the board(i.e. slide title),according to input character
-   //  //left -> (0,-1)  right->(0,1) up ->(-1,0)  down(1,0)
-   	
-   // 	if(answer == 'd'|| answer == 'D'){
-   // 	   doesUpdate = update(ptr_game,0,1);
-   // 	}
-   	
-   // 	//if update successfully, then render board again
-   //  if (doesUpdate)
-   //  {
-   //  	render(current_game);
-   //  }

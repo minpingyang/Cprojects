@@ -6,8 +6,10 @@ struct game {
 	// current score
 	int score;
 };
-
-
+/***save game state***/
+void saveGame(const struct game current_game);
+/***load previous game file**********/
+void loadGame(struct game *game);
 //check if the board has any space avaiable;
 bool is_Space(const struct game current_game);
 /**

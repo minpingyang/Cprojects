@@ -3,6 +3,59 @@
 #include <time.h>
 #include "k.h"
 
+
+
+void saveGame(const struct game current_game){
+	char ch; // declare a charcter to write a character to a file
+	FILE * fp; // pointer to data type File
+	fp = fopen ("savedGame.txt", "w"); // create and open a writable txt file to save data of game
+	int i,j;
+	
+    // store all characters after first line
+    for(i = 0; i <4; i++ )
+    {
+        for(j= 0; j < 4; j++)
+        {
+            ch = current_game.board[i][j];
+            putc(ch,fp);
+        }
+    }
+    //finally, write the score 
+    fprintf(fp, "%d",current_game.score);
+
+	fclose(fp); // close file
+	printf("saved current game state to savedGame.txt\n");
+}
+
+
+void loadGame(struct game *game){
+	FILE *fptr;
+	int score; 
+	// open
+	fptr = fopen ("savedGame.txt", "r") ;
+	
+	if (fptr == NULL) { 
+		printf ("File open failed.\n"); 
+		return;
+	}
+
+
+	//change all character of current board
+	int i,j;
+    for(i = 0; i <4; i++ )
+    {
+        for(j= 0; j < 4; j++)
+        {
+            game->board[i][j] = fgetc(fptr);
+        }
+    }
+
+	fscanf(fptr, "%d", &score);
+	game->score = score;
+
+	fclose(fptr); // close file
+}
+
 bool is_Space(const struct game current_game){
   int i,j;
     for(i = 0; i <4; i++ )
