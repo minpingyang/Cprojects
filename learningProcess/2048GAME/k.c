@@ -711,10 +711,7 @@ bool update(struct game* game, int dy, int dx)
 			}
 			return true;			
 		}
-		//move down
-		else if(dy == 1){
-			
-		}
+		
 
 	}
 	return false;
