@@ -5,7 +5,9 @@ int main(){
 	char answer =' '; // user input to slide titles;
 	//welcome note 
 	printf("\n------>>>>Welcome to the menue of games<<<<<---------\n");
- 	
+ 	printf("instruction: run the game by inputing a single character\n");
+ 	printf(" 'q'  ----quite the game \n");
+
  	printf("Now, continue game to input (w,a,s,d) below to slide titles\n");
 	 do {
 	      answer = getchar();	      
