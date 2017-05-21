@@ -20,6 +20,23 @@ int main() {
 
 void trim(char *str, char *dst) {
     // TODO – here you implement your trimmer function 
+    //replace all leadings tabs with spaces ;  
+	char *replaceTab = str;  /* Destination to copy to */
+	while(*str != '\0'){
+		if(*str == '\t'){
+			*str = ' ';
+			str++;
+		}else{
+			str++;
+		}
+
+	}
+
+	str =replaceTab;
+
+
+
+
     int removeLeading = 0;
 	while(*str != '\0'){
 
