@@ -715,9 +715,9 @@ bool update(struct game* game, int dy, int dx)
 	
 }
 
-void runK(){
-	main();
-}
+// void runK(){
+// 	main();
+// }
 
 int main(){
 	int count =0;

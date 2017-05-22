@@ -11,9 +11,7 @@ int start;
 int end;
 int randomNumber;
 
-void startGuessNumberGame(){
-  main();
-}
+
 
 int main(){
     guessGame();
@@ -25,7 +23,9 @@ int get_PCguess(const int start, const int end){
     randomNumber = (start + end)/2; 
     return randomNumber;   //return PC guess
 }
-
+void startGuess(){
+  main();
+}
 
 
 int is_Ggame_won(const int secret, const int guess){

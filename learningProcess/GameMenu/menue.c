@@ -15,6 +15,7 @@ int main(){
 		printf("\n------>>>>Welcome to the menue of games<<<<<---------\n");
 	 	printf("instruction: run the game depending on the single character\n");
 	 	printf(" 'q'  ----quite the game \n");
+	 	printf(" 's'  ----start select the game \n");
 	 	
 	 	printf("Enter: \n");
 	  	//quit or run game
@@ -54,9 +55,9 @@ int main(){
 	  		if(answer == '1'){
 	  			exitBack = menueGuessGame();
 	  		}else if(answer == '2'){
-	  			runTicTacToe();
+	  			exitBack = menueTicTacToe();
 	  		}else if(answer == '3'){
-	  			runKgame();
+	  			exitBack = menueKgame();
 	  		}
 
 		 }	
@@ -66,13 +67,21 @@ int main(){
     return 0;
 }
 
+int menueTicTacToe(){
+	return 0;
+}
+
+int menueKgame(){
+	return 0;
+}
+
 int menueGuessGame(){
-	
+	int exitBack = 0;
 	do{
 		int count = 0;
 		char answer = ' ';
 		printf("'s' -----start run guess number game\n");
-	 	printf("'m' -----back  to the menue\n");
+	 	printf("'m' -----back to main menue\n");
 	 	//chose a run/back to menue
 		do{
 	  		count = 0;
@@ -100,12 +109,11 @@ int menueGuessGame(){
 	          }while((answer != 's' && answer != 'e')|| count>0);
 	        
 	        if(answer == 's'){
-	              startGuessNumberGame(); //run the game from beginning
+	               startGuess(); //run the game from beginning
 	          }else if(answer == 'e'){
 	              exitBack = 1; // return to the menu of the game (not the main menu).
 	          }
 
-			runGuess();
   		}else if(answer == 'm'){
   			 return 1; // return back to main menue
   		}
