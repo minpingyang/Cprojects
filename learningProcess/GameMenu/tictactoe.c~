@@ -6,7 +6,7 @@ char humanChar; //(x/o)
 int insertPositionRow = 0;
 int insertPositionCol = 0;
 
-int startTicTacToe () {
+int runTicTacToe () {
   int count = 0;
   int isSolved = 0; //a flag judge if game solve
 
