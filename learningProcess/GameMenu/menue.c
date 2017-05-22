@@ -1,3 +1,4 @@
+//include all external header file
 #include "menue.h"
 #include "guessNumber.h"
 #include "k.h"
@@ -6,24 +7,28 @@
 
 int main(){
 
-	char answer = ' '; // user input
-	int count = 0; // count how many times the user inputs
-	int exitBack = 0;
-	//welcome note 
+	char answer = ' '; // user input to operate the game
+	int count = 0; // used to count how many characters user input
+	int exitBack = 0; // a flag used to determine if exit back to the main menue
+	
 	
 	do{
+		//welcome note 
 		printf("\n------>>>>Welcome to the menue of games<<<<<---------\n");
 	 	printf("instruction: run the game depending on the single character\n");
+	 	printf("when you start run the game, \nthen one of stage of game will ask user to save the current state into a specific txt file\n");
 	 	printf(" 'q'  ----quite the game \n");
 	 	printf(" 's'  ----start select the game \n");
 	 	
 	 	printf("Enter: \n");
 	  	//quit or run game
 
+	 	//
 	  	do{
-	  		count = 0;
-	  		answer = getchar();
-	  		while(getchar() != '\n'){count++;}
+	  		count = 0; // used to indicate user input multiple characters instead of singe char
+	  		answer = getchar(); // get the first single character
+	  		while(getchar() != '\n'){count++;} // clean all inputs before \n
+	  		//invalid input
 	  		if((answer != 'q' && answer != 's') || count>0){
 	  			printf("re-Enter a valid character: \n");
 	  		}
@@ -31,8 +36,8 @@ int main(){
 	  	}while((answer != 'q' && answer != 's') || count>0);
 	  	
 
-		  // quite the game case.
-		 if(answer == 'q' || answer == 'Q'){
+		  // quite the game.
+		 if(answer == 'q'){
 		 	return 0;
 		 }//step into game
 		 //choose which game you want to run.
@@ -53,7 +58,7 @@ int main(){
 	  	
 	  		//run guess number game
 	  		if(answer == '1'){
-	  			exitBack = menueGuessGame();
+	  			exitBack = menueGuessGame(); // check if exit back to main menue according the return value
 	  		}else if(answer == '2'){
 	  			exitBack = menueTicTacToe();
 	  		}else if(answer == '3'){

@@ -11,7 +11,7 @@ int start;
 int end;
 int randomNumber;
 
-
+//method is used to save current state
 void saveGuessGame(int PCguessNum, int start, int end, int randomNumber){
 	FILE * fp; // pointer to data type File
 	fp = fopen ("savedGuessNumberGame.txt", "w"); // create and open a writable txt file to save data of game

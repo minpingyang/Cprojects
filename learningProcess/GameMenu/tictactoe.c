@@ -6,6 +6,7 @@ char humanChar; //(x/o)
 int insertPositionRow = 0;
 int insertPositionCol = 0;
 
+//method is used to save current state
 void saveTicGame(int sizeF, char humanChar, int humanRow, int humanCol){
 	FILE * fp; // pointer to data type File
 	fp = fopen ("savedTicTacToeGame.txt", "w"); // create and open a writable txt file to save data of game
