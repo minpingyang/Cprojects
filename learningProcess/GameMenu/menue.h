@@ -1,0 +1,3 @@
+
+void mainMenue();
+void menueGuessGame();
