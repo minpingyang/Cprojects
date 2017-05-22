@@ -1,3 +1,2 @@
-
-void mainMenue();
-void menueGuessGame();
+#include <stdio.h>
+int menueGuessGame();

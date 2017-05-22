@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "k.h"
 
 
@@ -718,7 +715,11 @@ bool update(struct game* game, int dy, int dx)
 	
 }
 
-int runKgame(){
+void runK(){
+	main();
+}
+
+int main(){
 	int count =0;
 	char answer =' '; // user input to slide titles;
 	bool isContent_Changed = false;

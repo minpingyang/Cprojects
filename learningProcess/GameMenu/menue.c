@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "menue.h"
 #include "guessNumber.h"
 #include "k.h"
@@ -101,7 +100,7 @@ int menueGuessGame(){
 	          }while((answer != 's' && answer != 'e')|| count>0);
 	        
 	        if(answer == 's'){
-	              startGuessNumberGame();
+	              startGuessNumberGame(); //run the game from beginning
 	          }else if(answer == 'e'){
 	              exitBack = 1; // return to the menu of the game (not the main menu).
 	          }

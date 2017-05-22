@@ -1,16 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include "guessNumber.h"
 
 #define START 1
 #define END 100
 #define ATTEMPTS 5
- //declare functions first
-void guessGame();  
-int get_PCguess(const int start, const int end);
-int restTime_showPCGuess(const int attempt);
-int is_Ggame_won(const int secret, const int guess);
-void startGuessNumberGame();
 
 //declare global variables
 int PCguessNum;
@@ -24,35 +16,13 @@ void startGuessNumberGame(){
 }
 
 int main(){
-  int count = 0;
-  char answer = ' ';
-        printf("'s' -----start the game from beginning\n");
-        printf("'e' -----end the game\n");
-        //chose a run/back to menue
-        do{
-            count = 0;
-            answer = getchar();
-            while(getchar() != '\n'){count++;}
-            if((answer != 's' && answer != 'e') || count>0){
-              printf("re-Enter a valid character: \n");
-            }
-
-          }while((answer != 's' && answer != 'e')|| count>0);
-        
-        if(answer == 's'){
-              guessGame();
-          }else if(answer == 'e'){
-              menueGuessGame();
-          }
-
+    guessGame();
     return 0;
 }
 int get_PCguess(const int start, const int end){
     max --;
     
-    randomNumber = (start + end)/2;
-    
-    
+    randomNumber = (start + end)/2; 
     return randomNumber;   //return PC guess
 }
 
