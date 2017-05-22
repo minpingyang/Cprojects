@@ -12,7 +12,7 @@ struct game {
 	int score;
 };
 /***save game state***/
-void saveGame(const struct game current_game);
+void saveKGame(const struct game current_game);
 /***load previous game file**********/
 void loadGame(struct game *game);
 //check if the board has any space avaiable;

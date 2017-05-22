@@ -12,6 +12,20 @@ int end;
 int randomNumber;
 
 
+void saveGuessGame(int PCguessNum, int start, int end, int randomNumber){
+	FILE * fp; // pointer to data type File
+	fp = fopen ("savedGuessNumberGame.txt", "w"); // create and open a writable txt file to save data of game
+	
+    //write all these numbers into a txt file.
+    fprintf(fp, "%d %d %d %d",PCguessNum,start,end,randomNumber);
+
+	fclose(fp); // close file
+	printf("\n\n**************************saving current state of game**********************\n");
+	printf("saved current game state to savedGuessNumberGame.txt\n");
+	printf("**************************finish saving current state **************************\n\n");
+	printf("continue playing game...............\n");
+}
+
 
 int startGuessGame(){
     guessGame();
@@ -40,21 +54,23 @@ int is_Ggame_won(const int secret, const int guess){
       if(max==0) return 1;
    //CASE2 : FAILED 
      printf("----------------------------------------------\n");
-     printf("Seems like PC guess a wrong number.");
+     printf("input '1' -----------------For saving current state of game\n");
+     printf("Seems like PC guess a wrong number.\n");
      printf("Can you give a hint for PC? \n type in (l/L) means your number lower than PC guess \n");
      printf(" type in (h/H) means your number higher than PC guess\n");
   
     char userHelp;
    //clean remaining characters of input buffer if character is not l/L or H/h
     do{
+    	
       count = 0;
       userHelp = getchar();
       while(getchar() != '\n'){count++;}
-      if((userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H')|| count>0){
+      if((userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H' &&userHelp !='1' )|| count>0){
         printf("re-Enter a valid character: \n");
       }
 
-    }while((userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H')|| count>0);
+    }while((userHelp != 'l' && userHelp != 'h'&& userHelp != 'L'&& userHelp !='H'&&userHelp !='1')|| count>0);
      
 
     if((userHelp == 'l' || userHelp == 'L')&&(guess>secret)){
@@ -65,7 +81,11 @@ int is_Ggame_won(const int secret, const int guess){
     }else if((userHelp == 'h' || userHelp == 'H')&&(guess<secret)){
         printf("my number is higher, PC try again \n");   //H &h
         start = guess;
-    }else {
+    }//input 1 for saving current state of game
+    else if(userHelp == '1' ) {
+    	saveGuessGame(PCguessNum,start,end, randomNumber);
+    }
+    else {
        printf("You have not given the right hint，Could u next time give the right hint? \n");
     }
      return 1;
@@ -94,7 +114,7 @@ void guessGame(){
 
    printf("The number you chose is:  ");
    scanf("%d",&number_typedIn);      // user types in a number
-   
+   while(getchar() != '\n');
       do {      
       PCguessNum = get_PCguess(start,end);  // PC guess a number
       guessTimesLeft = restTime_showPCGuess(max); // show what PC guess and number of remaining opportunities 

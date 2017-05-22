@@ -2,7 +2,7 @@
 
 
 
-void saveGame(const struct game current_game){
+void saveKGame(const struct game current_game){
 	char ch; // declare a charcter to write a character to a file
 	FILE * fp; // pointer to data type File
 	fp = fopen ("savedGame.txt", "w"); // create and open a writable txt file to save data of game

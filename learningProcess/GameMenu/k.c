@@ -2,7 +2,7 @@
 
 
 
-void saveGame(const struct game current_game){
+void saveKGame(const struct game current_game){
 	char ch; // declare a charcter to write a character to a file
 	FILE * fp; // pointer to data type File
 	fp = fopen ("savedGame.txt", "w"); // create and open a writable txt file to save data of game
@@ -811,7 +811,7 @@ int startKgame(){
 	   	}
 	   	else if(answer == '1'){
 	   	   printf("\nSave current game state...............\n");
-	   	   saveGame(current_game);
+	   	   saveKGame(current_game);
 	   	   answer = 'm'; // allow to add random
 	   	}
 	   	else if(answer == '2'){

@@ -3,7 +3,7 @@
 #include <time.h>
 #include <stdbool.h>
 
-void runK();
+int startKgame();
 
 struct game {
 	// game board

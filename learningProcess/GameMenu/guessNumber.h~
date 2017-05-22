@@ -7,3 +7,4 @@ int get_PCguess(const int start, const int end);
 int restTime_showPCGuess(const int attempt);
 int is_Ggame_won(const int secret, const int guess);
 int startGuessGame();
+void saveGame(int PCguessNum, int start, int end, int randomNumber);
