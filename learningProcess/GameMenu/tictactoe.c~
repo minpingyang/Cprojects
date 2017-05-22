@@ -6,14 +6,31 @@ char humanChar; //(x/o)
 int insertPositionRow = 0;
 int insertPositionCol = 0;
 
-int runTicTacToe () {
+void saveTicGame(int sizeF, char humanChar, int humanRow, int humanCol){
+	FILE * fp; // pointer to data type File
+	fp = fopen ("savedTicTacToeGame.txt", "w"); // create and open a writable txt file to save data of game
+	
+    //write all these numbers into a txt file.
+    fprintf(fp, "%d %c %d %d",sizeF,humanChar,humanRow,humanCol);
+
+	fclose(fp); // close file
+	printf("\n\n**************************saving current state of game**********************\n");
+	printf("saved current game state to 'savedTicTacToeGame.txt'\n");
+	printf("**************************finish saving current state **************************\n\n");
+	printf("continue playing game...............\n");
+}
+int startTicTacToe () {
   int count = 0;
   int isSolved = 0; //a flag judge if game solve
 
   int doesAddCross = 1;
-
-  printf("Enter the size of field: ");
-  scanf("%d",&sizeF);
+	printf("the size of board should greater than 3 and less than 11\n");
+  printf("Enter the size of field: \n");
+	do {
+		scanf("%d",&sizeF);	
+	}while(sizeF >9 || sizeF < 4);
+	
+  
   int r,c;
   char board[sizeF][sizeF];
 
@@ -24,7 +41,7 @@ int runTicTacToe () {
   }
   draw(sizeF,board);
    printf("what character you want to use(X/O): ");
-  
+  while(getchar() != '\n');
   do{
       count = 0;
       humanChar = getchar();
@@ -65,7 +82,29 @@ int runTicTacToe () {
           // draw(sizeF, board);
           
           checkAdding(doesAddCross,sizeF,board);
-
+          
+				//ask user if want to save current state	
+				int count = 0;
+				char answer= ' ';			
+				printf("\nDo you want to save current state of game?\n");
+				printf("input '1' -------------saving current state\n");
+				printf("input '2' ------------continue game without saving\n");
+				while(getchar() != '\n');//clear the buffer of input
+    			do{	
+      			count = 0;
+     			answer = getchar();
+     			while(getchar() != '\n'){count++;}
+      			if((answer !='1' && answer != '2' )|| count>0){
+       				 printf("re-Enter a valid character: \n");
+      				}
+    			}while((answer !='1'&& answer != '2')|| count>0);
+     		if(answer == '1') {
+     			saveTicGame(sizeF,humanChar,insertPositionRow,insertPositionCol);
+     		}else if(answer == '2') {
+					printf("don't save game, keep going\n");     		
+     		}
+											
+          
           isSolved = is_solved(sizeF,board);
           if (isSolved == 1){
             printf("PC player won!\n");

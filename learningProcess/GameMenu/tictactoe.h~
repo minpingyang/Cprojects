@@ -8,3 +8,4 @@ int add_cross(const int size, char field[][size], const int x, const int y, cons
 int is_solved(const int size, char field[][size]);
 void make_turn(const int size, char field[][size]);
 void checkAdding(const int add_cross,const int size,char field[][size]);
+int startTicTacToe ();
