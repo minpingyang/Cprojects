@@ -114,7 +114,7 @@ void guessGame(){
 
    printf("The number you chose is:  ");
    scanf("%d",&number_typedIn);      // user types in a number
-   while(getchar() != '\n');
+   while(getchar() != '\n'){;}
       do {      
       PCguessNum = get_PCguess(start,end);  // PC guess a number
       guessTimesLeft = restTime_showPCGuess(max); // show what PC guess and number of remaining opportunities 
