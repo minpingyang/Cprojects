@@ -1,9 +1,17 @@
 #include <stdio.h>
-int main(void)
-   { int x, y;
-     y = 1234;
-     for (x = 5; x>=0; x--)
-       y = y/x;
-     printf("%d\n", y);
-     return 0;
+
+int main()
+{
+    int a[4] = {11,41,22,73};
+    
+    int *pj;
+    int i = 0;
+    for(pj = a; pj < a+4; pj++){
+        
+        (*pj)++;
+        printf("%d\n",*pj);
+        
+    }
+
+    return 0;
 }
