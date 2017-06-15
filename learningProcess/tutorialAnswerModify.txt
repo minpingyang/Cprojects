@@ -1,0 +1,19 @@
+- [ ] What is the difference between the declaration and definition of a data object or function? You can use the code example in Q2 to explain. 
+
+A declaration announces the properties of a data object or a function. The main reason for declaring data objects and functions is type checking. If a variable or function is declared and later reference is made to it with data objects that do not match the types in the declaration, the compiler will complain. The purpose of the complaint is to catch type errors at compile time rather than waiting until the program is run, when the results can be more fatal. 
+A definition, on the other hand, actually sets aside storage space (in the case of a data object) or indicates the sequence of statements to be carried out (in the case of a function). 
+
+- [ ] Why should pointers have data types when their size is always the same, e.g. 4 bytes (in a 32- bit machine), irrespective of the variable they are pointing to? 
+
+* i)  Allows the compiler to spot potential incorrect operations on the contents of the memory location pointed to by the pointer.  
+* ii)  For an array, consecutive memory is allocated. Each element is placed at a certain offset from the previous element, if any, depending on its size. The compiler that generates code for a pointer, which accesses these elements using the pointer arithmetic, requires the number of bytes to retrieve on pointer dereference and it knows how much to scale an array index. The data type of the pointer provides this information. The compiler automatically scales an index to the size of the variable pointed at. The compiler takes care of scaling before adding the base address.  
+
+- [ ] When fq is assigned to ip, a pointer to an integer, *ip interprets the contents of the memory location pointed to by ip as an integer, i.e. the sign-exponent-mantissa format now assumed to be simple binary format. Since both integer and single-precision floating point variable occupy the same number of bytes, the output is wrong but consistent. 
+	dr is a pointer to a double-precision floating point variable of size 8 bytes. The first 4 bytes are the same in 	each execution, but the next four bytes are undefined since they are not allocated. Hence, each time printf tries to print the contents pointed to by dr, there are different contents in the next 4 bytes, hence the unpredictable output. 
+
+- [ ] If global variables can be used anywhere in the program, why not make all variables global? (Hint: remember where global variables are stored, i.e. which segment and for how long, and similarly for local variables.)
+Variables declared as global take up memory for the entire time during which the program runs; however, local variables do not. A local variable takes up memory only while the function to which it is local is active. When a program becomes complex and large, it may be needed to declare more and more variables, taking up lots of memory that are not likely to be used all the time. 
+Additionally, global variables are subject to unintentional alteration by other functions. If this occurs, the variables might not contain the values one expects when they are used in the functions for which they were created. 
+
+- [ ] What is the difference between an internal static variable and an external static variable?
+An internal static variable is declared inside a block with static storage class whereas an external static variable is declared outside all the blocks in a compilation unit (i.e. file.) An internal static variable has persistent storage, block scope, and no linkage. An external static variable has permanent storage, file scope, and internal linkage.
