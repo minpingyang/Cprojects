@@ -57,3 +57,28 @@ public class Exercise{
         
      }
 }
+
+/***final */
+
+public class Final{
+    public Final(){ trickster();}
+    void trickster(){
+        System.out.println("1111111");
+    }
+    public static class Inner extends Final{
+    	public int x,y = 123;   //x = 0 y =123 if static
+    	public final int z = 456;
+    	public void Inner(){ x+= 10;}
+    	void trickster(){
+            System.out.println("x: "+x);  //0
+            System.out.println("y: "+y+"  z: "+z);
+            x+=y+z;
+        }
+    }
+    
+    
+     public static void main(String []args){
+       System.out.println(new Inner().x);
+        
+     }
+}
