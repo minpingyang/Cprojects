@@ -32,7 +32,7 @@ char upcase(char ch){
 char* fixkey(char* s){
   int i, j;        
   char plain[26]; //(!!probably need check the length of the key) assume key < length of alphabet, local array on stack, will go away!
-  //
+  
   for(i = 0, j = 0; i < strlen(s); i++){
     char upLetter = upcase(s[i]);  //add condition to avoid duplicates
     if(isalpha(s[i])&&isDuplicate(plain,upLetter)){ //skip punction
@@ -42,6 +42,7 @@ char* fixkey(char* s){
   plain[j] = '\0'; 
   return strcpy(s, plain);
 }
+
 //check the next letter if it is already existing
 int isDuplicate(char* encode,char nextLett){ 
   char* iniEncode = encode; //remember the initial key 
@@ -89,20 +90,39 @@ void buildtable (char* key, char* encode){
   // Your code here:
 
   // probably need to declare some stuff here!
+  int offset= strlen(key);//the length couting white space and punctions
   
   fixkey(key); // fix the key, i.e., uppercase and remove whitespace and punctuation
-
+  int index = offset+strlen(key)-2; // the index of final letter of fixedKey
   // Do some stuff here to make a translation between plain and cypher maps.
   //creat a array to store the key
   //go through the key
   encode = key;
-  int len = strlen(encode);
-  //find the final char of the key
-  char finalCh = *(encode+=(len-1));
-  char nextCh = nextChar(encode,finalCh);
-  
-  if(){}
+  //keep adding letter and updating encypered text
+  int len;
+  char nextCh;
+  char encypered[27];//include '\0' at the end
+  int i;
+  // store fixed key to the encrypted array in correct index.
+  for(i=offset-1;i<index;i++){
+    encypered[i] = *key;
+    key++;
+  }
 
+
+  while(len<26){
+    len = strlen(encode);
+    //find the final char of the key
+    char finalCh = *(encode+=(len-1));
+    nextCh = nextChar(encode,finalCh);
+    index++;
+    if(index==26){
+      index = 0;
+    }
+      encypered[index]=nextCh;
+  }
+  encypered[26]='\0';
+  strcpy(encode, encypered);
 }
 
 int main(int argc, char **argv){
@@ -122,7 +142,7 @@ int main(int argc, char **argv){
   // Build translation tables, and ensure key is upcased and alpha chars only.
 
   buildtable(argv[1], encode);
-
+  //!!should limite the length of the key <= 26
   // write the key to stderr (so it doesn't break our pipes)
  //stand error
   fprintf(stderr,"key: %s - %d\n", encode, strlen(encode));
@@ -130,13 +150,13 @@ int main(int argc, char **argv){
   // the following code does the translations.  Characters are read 
   // one-by-one from stdin, translated and written to stdout.
 
-  ch = fgetc(stdin);
+  ch = fgetc(stdin); //keyboard input to the file(plain-text file)
   while (!feof(stdin)) {
     if(isalpha(ch)){        // only encrypt alpha chars
       ch = upcase(ch);      // make it uppercase
-      fputc(encode[ch-'A'], stdout);
+      fputc(encode[ch-'A'], stdout);//output (enciphered file)
     }else 
-      fputc(ch, stdout);
+      fputc(ch, stdout);    //output punction or white space
     ch = fgetc(stdin);      // get next char from stdin
   }
 }
