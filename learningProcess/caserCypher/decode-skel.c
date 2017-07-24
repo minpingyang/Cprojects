@@ -12,143 +12,120 @@
    See encode for  examples on using it
  */
 
-char upcase(char ch){
-  if(islower(ch))
-    ch -= 'a' - 'A';
-  return ch;
+int in(char c, char* s, int pos){
+    // Assume everything is already in the same case
+    int i;
+    
+    for(i = 0; i < pos; i++)
+        if(c == s[i]) return 1;
+    
+    return 0;
 }
 
-// char* fixkey(char* s){
-//   int i, j;
-//   char plain[26]; // assume key < length of alphabet, local array on stack, will go away!
 
-//   for(i = 0, j = 0; i < strlen(s); i++){
-//     if(isalpha(s[i])){
-//       plain[j++] = upcase(s[i]);
-//     }
-//   }
-//   plain[j] = '\0'; 
-//   return strcpy(s, plain);
-// }
-
-
-// int in(char c, char* s, int pos){
-//   // Assume everything is already in the same case
-//   int i;
-
-//   for(i = 0; i < pos; i++)
-//     if(c == s[i]) return 1;
-    
-//   return 0;
-// } 
-
+char upcase(char ch){
+    if(islower(ch))
+        ch -= 'a' - 'A';
+    return ch;
+}
 
 char* fixkey(char* s){
-  int i, j;        
-  char plain[26]; //(!!probably need check the length of the key) assume key < length of alphabet, local array on stack, will go away!
-  
-  for(i = 0, j = 0; i < strlen(s); i++){
-    char upLetter = upcase(s[i]);  //add condition to avoid duplicates
-    if(isalpha(s[i])&&isDuplicate(plain,upLetter)){ //skip punction
-      plain[j++] = upLetter;
+    int i, j;
+    char plain[26]; // assume key < length of alphabet, local array on stack, will go away!
+    
+    for(i = 0, j = 0; i < strlen(s); i++){
+        if(isalpha(s[i])&&(in(upcase(s[i]),plain,strlen(plain))!=1)){
+            plain[j++] = upcase(s[i]);
+        }
     }
-  }
-  plain[j] = '\0'; 
-  return strcpy(s, plain);
+    plain[j] = '\0';
+    return strcpy(s, plain);
+}
+int isDuplicate(char nextC, char* table){
+    int i = 0;
+    for(;i<26;i++){
+        if(nextC==table[i]){
+            // printf("!!!!i: %d, c: %c\n",i,table[i]);
+            return 1;
+        }
+    }
+    return 0;
 }
 
-//check the next letter if it is already existing
-int isDuplicate(char* encode,char nextLett){ 
-  char* iniEncode = encode; //remember the initial key 
- 
-  while(*encode != '\0'){//!!not sure if end with '\0'
-    if(*encode != nextLett){ // no duplicate case
-       encode++;
-    }else{//duplicate with key
-       return 1;
-    }
-  }
-  //now, *encode == '\0', then add the letter to encode
-  *encode = nextLett;
-  *(encode++) = '\0';
-  //point back to the first char of the key
-  encode = iniEncode;
-  return 0;
+char next(char lastC_Key,char* table){
+    char nextC;
+    int isD=0;
+    do{
+        
+        if(lastC_Key<'Z'){
+            nextC = lastC_Key+1;
+        }else{
+            nextC = 'A';
+        }
+        isD= isDuplicate(nextC,table);
+        // printf("isD?: %d\n",isD);
+        if(isD==1){
+            lastC_Key = nextC;
+        }
+    }while(isD==1);
+    return nextC;
 }
 
-char nextChar(char* encode,char finalCh){
-  char nextCh;
-  if(finalCh < 'Z'){ // to sure 
-    nextCh = final+1; 
-  }else{
-    nextCh = 'A'; 
-  }
 
-  int isDu = isDuplicate(encode,nextCh);
-  if(isDu ==0){//sans duplicate and update the encode
-    return nextCh;
-  }else{
-    nextChar(encode, nextCh);
-  }
-} 
 
 void buildtableEncode (char* key, char* encode){
-
-  // This function needs to build an array of mappings in the 'encode' array from plaintext characters
-  // to encypered characters.  The encode array will be indexed by the plaintext char.  To 
-  // make this a useful 0-26 index for the array, 'A' will be stubtracted from it (yes you
-  // can do this in C).  You can see this in the main(){} below.  The values in the array 
-  // will be the cipher value, in the example at the top A -> H, B -> J, etc.
-
-  // You are implementing a Caesar 1 & 2 combo Cypher as given in handout.
-  // Your code here:
-
-  // probably need to declare some stuff here!
-  int offset= strlen(key);//the length couting white space and punctions
-  
-  fixkey(key); // fix the key, i.e., uppercase and remove whitespace and punctuation
-  int index = offset+strlen(key)-2; // the index of final letter of fixedKey
-  // Do some stuff here to make a translation between plain and cypher maps.
-  //creat a array to store the key
-  //go through the key
-  encode = key;
-  //keep adding letter and updating encypered text
-  int len;
-  char nextCh;
-  char encypered[27];//include '\0' at the end
-  int i;
-  // store fixed key to the encrypted array in correct index.
-  for(i=offset-1;i<index;i++){
-    encypered[i] = *key;
-    key++;
-  }
-
-
-  while(len<26){
-    len = strlen(encode);
-    //find the final char of the key
-    char finalCh = *(encode+=(len-1));
-    nextCh = nextChar(encode,finalCh);
-    index++;
-    if(index==26){
-      index = 0;
+    // This function needs to build an array of mappings in the 'encode' array from plaintext characters
+    // to encypered characters.  The encode array will be indexed by the plaintext char.  To
+    // make this a useful 0-26 index for the array, 'A' will be stubtracted from it (yes you
+    // can do this in C).  You can see this in the main(){} below.  The values in the array
+    // will be the cipher value, in the example at the top A -> H, B -> J, etc.
+    
+    // You are implementing a Caesar 1 & 2 combo Cypher as given in handout.
+    // Your code here:
+    
+    // probably need to declare some stuff here!
+    int offset= strlen(key);//13
+    fixkey(key); //7 fix the key, i.e., uppercase and remove whitespace and punctuation
+    int restNum= (int)(26-strlen(key));
+    char table[27];
+    //initialise
+    int j=0;
+    for(;j<26;j++){
+        table[j] = ' ';
     }
-      encypered[index]=nextCh;
-  }
-  encypered[26]='\0';
-  strcpy(encode, encypered);
-}
-void buildtable (char* key, char* decode){ // this changed from encode
-  char* encode = decode;
-  buildtableEncode(key,encode);
-  int i = 0;
-  int orderIndex;
-  for(;i<26;i++){
-    char encyperedCh = encode[i];
-    orderIndex = encyperedCh - 'A';
-    decode[orderIndex]=encyperedCh;
-  }
+    table[26]='\0';
+    
+    int i = offset-1; //12
+    // Do some stuff here to make a translation between plain and cypher maps.
+    //add fixed key to the table
+    for(;i<i+strlen(key);i++,key++){
+        table[i]=*key;
+        // printf("%d:,%c\n",i,table[i]);
+    }
+    int nextIndex;
+    int count=0;
+    char nextC;
+    
+    
+    while(count<restNum){
+        nextC = next(table[i-1],table);
+        nextIndex = i%26;
+        // printf("nextCh:%c,  nextIndex: %d, i: %d\n",nextC, nextIndex,i);
+        table[nextIndex] = nextC;
+        if(i==26){
+            i=0;
+        }
+        i++;
+        count++;
+    }
+          // printf("%s\n",table);
+          strcpy(encode, table);
+ }
+     
 
+
+void buildtable (char* key, char* decode){ // this changed from encode
+  
   // This function needs to build an array of mappings in 'encode' from plaintext characters
   // to encihered characters.
 
@@ -156,8 +133,24 @@ void buildtable (char* key, char* decode){ // this changed from encode
   // Your code here:
 
   // probably need to declare some stuff here!
-  
-  
+  char temp[27];
+  temp[26] = '\0';
+
+  buildtableEncode(key,temp);
+  char temp2[27];
+  temp2[26]='\0';
+
+  printf("%s\n",temp);
+  int i = 0;
+  int orderIndex;
+  for(;i<26;i++){
+    char nextC= temp[i];
+    orderIndex = nextC - 'A';
+    // printf("index:%d, char: %c\n",orderIndex,nextC);
+    temp2[orderIndex] = nextC;
+  }
+  strcpy(decode, temp2);
+  printf("%s\n",decode);
 
   // the simplest way to do this is to do exactly the same as you did when creating the 
   // encode table, and then look up the encode table to get the translations, and build the
@@ -196,10 +189,12 @@ int main(int argc, char **argv){
     ch = fgetc(stdin);
     while (!feof(stdin)) {
       if(isalpha(ch))          // only decrypt alpha chars
-  ch = upcase(ch);
-	fputc(decode[ch-'A'], stdout);
-     else 
-	fputc(ch, stdout);
+      	{ch = upcase(ch);
+        fputc(decode[ch-'A'], stdout);
+      }
+     else {
+        fputc(ch, stdout);
+     }
       ch = fgetc(stdin);      // get next char from stdin
     }
 }
