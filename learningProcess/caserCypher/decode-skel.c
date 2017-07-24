@@ -133,24 +133,25 @@ void buildtable (char* key, char* decode){ // this changed from encode
   // Your code here:
 
   // probably need to declare some stuff here!
+  char encode[27];
+  encode[26] = '\0';
+
+  buildtableEncode(key,encode);
   char temp[27];
-  temp[26] = '\0';
+  temp[26]='\0';
 
-  buildtableEncode(key,temp);
-  char temp2[27];
-  temp2[26]='\0';
-
-  printf("%s\n",temp);
+  // printf("%s\n",encode);
   int i = 0;
   int orderIndex;
   for(;i<26;i++){
-    char nextC= temp[i];
+    char nextC= encode[i];
     orderIndex = nextC - 'A';
-    // printf("index:%d, char: %c\n",orderIndex,nextC);
-    temp2[orderIndex] = nextC;
+    char indexC = 'A'+i;
+    temp[orderIndex] = indexC;
+    // printf("index:%d, char: %c\n",orderIndex,indexC);
   }
-  strcpy(decode, temp2);
-  printf("%s\n",decode);
+  strcpy(decode, temp);
+  // printf("%s\n",decode);
 
   // the simplest way to do this is to do exactly the same as you did when creating the 
   // encode table, and then look up the encode table to get the translations, and build the
