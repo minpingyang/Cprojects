@@ -42,7 +42,30 @@ char upcase(char ch){
     ch -= 'a' - 'A';
   return ch;
 }
-
+//find the maximum value in the arr
+//pass the length of the array
+/**
+the method is used to return the index of the maximum 
+and change the value of the index become -2
+*/
+int max(int[] arr,int len){
+  int max = -1;
+  int i = 0;
+  for(;i<len;i++){
+    if(max<arr[i]){
+      max=arr[i];
+    }
+  }
+  i=0;
+  //find the index of the max value in the array
+  for(;i<len;i++){
+    if(max==arr[i]){
+      arr[i]=-2;
+      return i;
+    }
+  }
+  return i;
+}
 
 void analysisFrequence(char[][] collectSubtext){
   
@@ -100,22 +123,54 @@ void createSubtext(int n,int len,char* text){
     }
   }
   //sort frequence from bigger to smaller
+  // i=0;
+  // m=0;
+  // j=0; 
+  
+  // for(;m<25;m++){
+  //   for(;j<25-i;j++){
+  //       if(frequAnaly[j+1]>frequAnaly[j+1]){
+  //         int temp = frequAnaly[j];
+  //         frequAnaly[j] =frequAnaly[j+1];
+  //         frequAnaly[j+1]=temp;
+  //       }
+  //   }
+  // }
   i=0;
   m=0;
-  j=0; 
- 
-    for(;m<25;m++){
-      for(;j<25-i;j++){
-        if(frequAnaly[j+1]>frequAnaly[j+1]){
-          int temp = frequAnaly[j];
-          frequAnaly[j] =frequAnaly[j+1];
-          frequAnaly[j+1]=temp;
+  j=0; // the index of CHEFREQ
+  x=0; // the index of freqAnaly 
+  for(;i<n;i++){
+      for(;x<26;x++){
+      int index = max(freqAnaly[i]);
+      char c = 'A'+index;
+      for(;collectSubtext[i][m]!=' '||collectSubtext[i][m]!='\0';m++){
+        if(collectSubtext[i][m]==c){
+          collectSubtext[i][m]=CHFREQ[j];
         }
       }
-    }
-  
+      j++;
+     }
+  }
+  //recombine 'decode subtext'  ?????do we need with punction and whitespace
+  char result[len+1];
+  //initialise result
+  i=0;
+  for(;i<len;i++){
+    result[i]=' ';
+  }
+  result[len]='\0';
+  i=0
+  m=0;
+  indexOfText=0;
+    for(;m<maxLenghtOfSubtext;m++){
+      for(;i<n|| indexOfText<len;i++,indexOfText++){
+        result[indexOfText]=collectSubtext[i][m];
+        printf("i: %d  m: %d \n",i,m);
+        printf("index: %d char: %c\n",indexOfText,text[indexOfText]);
 
-
+      }
+   }
 
 }
 
