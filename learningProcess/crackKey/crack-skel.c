@@ -48,7 +48,7 @@ char upcase(char ch){
 the method is used to return the index of the maximum 
 and change the value of the index become -2
 */
-int max(int[] arr,int len){
+int indexMax(int arr[],int len){
   int max = -1;
   int i = 0;
   for(;i<len;i++){
@@ -67,10 +67,7 @@ int max(int[] arr,int len){
   return i;
 }
 
-void analysisFrequence(char[][] collectSubtext){
-  
-  
-}
+
 
 //create (number of key) of subtext, 
 //pass the number(n) of subtext needed creating
@@ -114,12 +111,12 @@ void createSubtext(int n,int len,char* text){
  //apply frequence to each subtext
   i=0;
   m=0;
-  int indexOfText=0  
+  indexOfText=0;  
   for(;i<n;i++){
     for(;collectSubtext[i][m]!=' '||collectSubtext[i][m]!='\0';m++){
       int ch = collectSubtext[i][m]-'A';
       printf("ch: %d\n",ch);
-      frequAnaly[i][ch]++;
+      freqAnaly[i][ch]++;
     }
   }
   //sort frequence from bigger to smaller
@@ -138,11 +135,11 @@ void createSubtext(int n,int len,char* text){
   // }
   i=0;
   m=0;
-  j=0; // the index of CHEFREQ
-  x=0; // the index of freqAnaly 
+  int j=0; // the index of CHEFREQ
+  int x=0; // the index of freqAnaly 
   for(;i<n;i++){
       for(;x<26;x++){
-      int index = max(freqAnaly[i]);
+      int index = indexMax(freqAnaly[i],26);
       char c = 'A'+index;
       for(;collectSubtext[i][m]!=' '||collectSubtext[i][m]!='\0';m++){
         if(collectSubtext[i][m]==c){
@@ -160,7 +157,7 @@ void createSubtext(int n,int len,char* text){
     result[i]=' ';
   }
   result[len]='\0';
-  i=0
+  i=0;
   m=0;
   indexOfText=0;
     for(;m<maxLenghtOfSubtext;m++){
@@ -198,18 +195,12 @@ int main(int argc, char **argv){
    */
 
   
-  int maxNoKeys= atoi(argv[1]);
-  int n = 1; // n st subtext
-  int i = 0; // subtext index
+
+
   //create (number of key) of subtext
 
-
-  for(;n<=maxNoKeys;n++){ // 
-    
-    for(;i<=strlen(text);i++){
-
-    }
-  }
+  createSubtext(n,strlen(text),text);
+  
 
 
    /* What you need to do is as follows:
@@ -231,7 +222,6 @@ int main(int argc, char **argv){
    * getting too long, double check you're on the right track.
    *
    */
-  int 
 
   // Your code here...
 
