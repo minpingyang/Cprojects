@@ -45,15 +45,16 @@ int indexMax(int* arr,int len){
     }
   }
   if(max==0){
-    return -1;
+      return -1;//have not exist 
   }
-  for(i=0;i<len;i++){
-    if(max==arr[i]){
-      arr[i]=-2;
-      return i;
-    }
-  } 
-  return i;
+  
+   for(i=0;i<len;i++){
+      if(max==arr[i]){
+        arr[i]=-2; // set maxium value frequence to -2
+        return i;
+      }
+    } 
+    return i;
 }
 
 
@@ -65,13 +66,13 @@ char upcase(char ch){
 //len of the input test.txt
 //
 void createSubtext(int n,int len,char* text){
-  // printf("len: %d\n",len);//43
+  // printf("len: %d\n",len);//18
   int maxLenSub;
-  if(n>1){
-    maxLenSub=(len+1)/n;
-    // printf("ddd\n");
+  if(len%n!=0){
+    maxLenSub=1+len/n;
+    // printf("maxLen:%d\n",maxLenSub);
   }else{
-    maxLenSub=len;
+    maxLenSub=len/n;
   }
   
   char collectSubtext[n][maxLenSub+1];
@@ -81,9 +82,13 @@ void createSubtext(int n,int len,char* text){
   int row=0;
   int indexText=0;
   //initialise collectSubtext to whitespace and \0 at each end of subtext
- 
+  for(row=0;row<n;row++){
+    for(col=0;col<maxLenSub;col++){
+      frequenceSub[row][col]='a';
+   }
+  }
 
-  //add all chars into collectSub
+  //add all chars(including punctuation and alpha) into collectSub
   for(col=0;col<maxLenSub;col++){
     for(row=0;row<n&&indexText<len;row++,indexText++){
       collectSubtext[row][col]=text[indexText];
@@ -99,6 +104,7 @@ void createSubtext(int n,int len,char* text){
       freqAnaly[row][col]=0;
     }
   }
+  int charLen=0; // the number of alpha of inputs
   int ch;//the index of character 
   //apply frequence to each subtext
   for(row=0;row<n;row++){
@@ -107,18 +113,46 @@ void createSubtext(int n,int len,char* text){
         frequenceSub[row][col]=collectSubtext[row][col];
         continue;
       }
+      charLen++;
       ch = collectSubtext[row][col]-'A';
       freqAnaly[row][ch]++;
-      // printf("col: %d ch: %d\n",col,ch);
+      // printf(" Subrow: %d Subcol: %d Frech: %d",row,col,ch);
     }
+    // printf("\n");
   }
-
+  // printf("charlen: %d\n",charLen);
   int inF=0; //the index of freqAnaly
   int inMa=0; // the index of maximu value in each subtext
   char charMa; //the character of most frequence in freqAna
   int inCH=0; // the index of CHFREQ 
+  // for(row=0;row<n;row++){
+  //   for(col=0;col<26;col++){
+  //     int f = freqAnaly[row][col];
+  //     char c = col+'A';
+  //     // printf(" Subrow: %d Subcol: %c Fre: %d",row,c,f);
+  //   }
+  // }
+ 
+  indexText = 0;
+  // for(row=0;row<n;row++)
+  // {
+  //   for(inF=0;inF<26;inF++){
+  //     inMa =indexMax(freqAnaly[row],26);
+  //     // printf("index: %d  Max(-2): %d\n",inMa,freqAnaly[row][inMa]);
+  //     if(inMa==-1){break;}
+  //     charMa = 'A'+inMa;
+  //     printf("row: %d charMa: %c\n",row,charMa);
+  //     for(col=0;col<maxLenSub&&indexText<charLen;col++,indexText++){
+  //       if(collectSubtext[row][col]==charMa){
+  //         // frequenceSub[row][col]=CHFREQ[inF];
+  //         collectSubtext[row][col]=CHFREQ[inF];
+  //         printf("row: %d col:%d charTe:%s\n",row,col,collectSubtext[row]);
+  //       }
+  //     }    
+  //   }
+  //   // col=0;
+  // }
   
-
 
   for(row=0;row<n;row++)
   {
@@ -128,19 +162,23 @@ void createSubtext(int n,int len,char* text){
       if(inMa==-1){break;}
       charMa = 'A'+inMa;
       // printf("charMa: %c\n",charMa);
-      for(col=0;col<maxLenSub;col++){
+      for(col=0;col<maxLenSub&&indexText<charLen;col++){
         if(collectSubtext[row][col]==charMa){
+          indexText++;
           frequenceSub[row][col]=CHFREQ[inCH];
           collectSubtext[row][col]='1';
-          // printf("col:%d charTe:%s  \n",col,frequenceSub[row]);
+          // printf("row: %d col:%d charTe:%s\n",row,col,frequenceSub[row]);
           
         }
       }
       inCH++;
     }
     col=0;
+    inCH=0;
   }
   
+
+
   // printf("%s\n",frequenceSub[0]);
   char result[len+1];
  
@@ -202,6 +240,16 @@ int main(int argc, char **argv){
   
   // Your code here...
   //create sub-cryphertext according to number of key
-  createSubtext(n,strlen(text),text);
+  int numKey=1;
+  
+  	while(numKey<=n){
+  		createSubtext(numKey,strlen(text),text);
+  		numKey++;
+  	}
+  	
+  		
+  	
+  
+  
 }
 
