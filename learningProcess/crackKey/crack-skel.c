@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#define TEXT_SIZE 100000  // Note, the longer the text the more likely you will get a good 'decode' from the start.
+#define TEXT_SIZE 1000000  // Note, the longer the text the more likely you will get a good 'decode' from the start.
 #define ALEN 26         // Number of chars in ENGLISH alphabet
 #define CHFREQ "ETAONRISHDLFCMUGYPWBVKJXQZ" // Characters in order of appearance in English documents.
 #define ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -36,140 +36,127 @@
 
 
  */
+int indexMax(int* arr,int len){
+  int max=-1;
+  int i=0;
+  for(i=0;i<len;i++){
+    if(max<arr[i]){
+      max=arr[i];
+    }
+  }
+  if(max==0){
+    return -1;
+  }
+  for(i=0;i<len;i++){
+    if(max==arr[i]){
+      arr[i]=-2;
+      return i;
+    }
+  } 
+  return i;
+}
+
 
 char upcase(char ch){
   if(islower(ch))
     ch -= 'a' - 'A';
   return ch;
 }
-//find the maximum value in the arr
-//pass the length of the array
-/**
-the method is used to return the index of the maximum 
-and change the value of the index become -2
-*/
-int indexMax(int arr[],int len){
-  int max = -1;
-  int i = 0;
-  for(;i<len;i++){
-    if(max<arr[i]){
-      max=arr[i];
-    }
-  }
-  i=0;
-  //find the index of the max value in the array
-  for(;i<len;i++){
-    if(max==arr[i]){
-      arr[i]=-2;
-      return i;
-    }
-  }
-  return i;
-}
-
-
-
-//create (number of key) of subtext, 
-//pass the number(n) of subtext needed creating
-//the length of input text
-//text is the input text
+//len of the input test.txt
+//
 void createSubtext(int n,int len,char* text){
-  int i =0; // index of subtext
-  int maxLenghtOfSubtext= len/n;
-  int m = 0;
-  char collectSubtext[n][maxLenghtOfSubtext+1];
-  char frequenceTable[27];
-  //initialise the 2D array with whitespace
-  for(;i<n;i++){
-    for(;m<maxLenghtOfSubtext;m++){
-        collectSubtext[i][n]=' ';    
-    }
-    collectSubtext[i][maxLenghtOfSubtext]='\0'; // each subtext end with '\0'  
+  // printf("len: %d\n",len);//43
+  int maxLenSub;
+  if(n>1){
+    maxLenSub=(len+1)/n;
+    // printf("ddd\n");
+  }else{
+    maxLenSub=len;
   }
-  //spread text into subtexts of the 2D array
-  i=0;
-  m=0;
-  int indexOfText=0;
-    for(;m<maxLenghtOfSubtext;m++){
-      for(;i<n|| indexOfText<len;i++,indexOfText++){
-        collectSubtext[i][m]=text[indexOfText];
-        printf("i: %d  m: %d \n",i,m);
-        printf("index: %d char: %c\n",indexOfText,text[indexOfText]);
-
-      }
-    }
-  //anaylze frequence of each subtext and replace the character accroding to the frequence table
-  int freqAnaly [n][26];
-  //initialise frequAnaly with 0
-  i=0;
-  m=0;
-  for(;i<n;i++){
-    for(;m<26;m++){
-      freqAnaly[i][m]=0;
-    }
-  }
- //apply frequence to each subtext
-  i=0;
-  m=0;
-  indexOfText=0;  
-  for(;i<n;i++){
-    for(;collectSubtext[i][m]!=' '||collectSubtext[i][m]!='\0';m++){
-      int ch = collectSubtext[i][m]-'A';
-      printf("ch: %d\n",ch);
-      freqAnaly[i][ch]++;
-    }
-  }
-  //sort frequence from bigger to smaller
-  // i=0;
-  // m=0;
-  // j=0; 
   
-  // for(;m<25;m++){
-  //   for(;j<25-i;j++){
-  //       if(frequAnaly[j+1]>frequAnaly[j+1]){
-  //         int temp = frequAnaly[j];
-  //         frequAnaly[j] =frequAnaly[j+1];
-  //         frequAnaly[j+1]=temp;
-  //       }
-  //   }
-  // }
-  i=0;
-  m=0;
-  int j=0; // the index of CHEFREQ
-  int x=0; // the index of freqAnaly 
-  for(;i<n;i++){
-      for(;x<26;x++){
-      int index = indexMax(freqAnaly[i],26);
-      char c = 'A'+index;
-      for(;collectSubtext[i][m]!=' '||collectSubtext[i][m]!='\0';m++){
-        if(collectSubtext[i][m]==c){
-          collectSubtext[i][m]=CHFREQ[j];
+  char collectSubtext[n][maxLenSub+1];
+  char frequenceSub[n][maxLenSub+1];
+  // printf("n:%d maxLenSub: %d\n",n,maxLenSub);//43
+  int col=0;
+  int row=0;
+  int indexText=0;
+  //initialise collectSubtext to whitespace and \0 at each end of subtext
+ 
+
+  //add all chars into collectSub
+  for(col=0;col<maxLenSub;col++){
+    for(row=0;row<n&&indexText<len;row++,indexText++){
+      collectSubtext[row][col]=text[indexText];
+      // printf("row:%d col: %d\n",row,col);
+      // printf("index:%d char: %c\n",indexText,text[indexText]);
+      // printf("\n");
+    }
+  }
+  int freqAnaly[n][26];
+  //initialise freqAnaly to zero
+  for(row=0;row<n;row++){
+    for(col=0;col<26;col++){
+      freqAnaly[row][col]=0;
+    }
+  }
+  int ch;//the index of character 
+  //apply frequence to each subtext
+  for(row=0;row<n;row++){
+    for(col=0;col<maxLenSub;col++){
+      if(!isalpha(collectSubtext[row][col])){
+        frequenceSub[row][col]=collectSubtext[row][col];
+        continue;
+      }
+      ch = collectSubtext[row][col]-'A';
+      freqAnaly[row][ch]++;
+      // printf("col: %d ch: %d\n",col,ch);
+    }
+  }
+
+  int inF=0; //the index of freqAnaly
+  int inMa=0; // the index of maximu value in each subtext
+  char charMa; //the character of most frequence in freqAna
+  int inCH=0; // the index of CHFREQ 
+  
+
+
+  for(row=0;row<n;row++)
+  {
+    for(inF=0;inF<26;inF++){
+      inMa =indexMax(freqAnaly[row],26);
+      // printf("index: %d  Max(-2): %d\n",inMa,freqAnaly[row][inMa]);
+      if(inMa==-1){break;}
+      charMa = 'A'+inMa;
+      // printf("charMa: %c\n",charMa);
+      for(col=0;col<maxLenSub;col++){
+        if(collectSubtext[row][col]==charMa){
+          frequenceSub[row][col]=CHFREQ[inCH];
+          collectSubtext[row][col]='1';
+          // printf("col:%d charTe:%s  \n",col,frequenceSub[row]);
+          
         }
       }
-      j++;
-     }
+      inCH++;
+    }
+    col=0;
   }
-  //recombine 'decode subtext'  ?????do we need with punction and whitespace
+  
+  // printf("%s\n",frequenceSub[0]);
   char result[len+1];
-  //initialise result
-  i=0;
-  for(;i<len;i++){
-    result[i]=' ';
+ 
+  indexText=0;
+  for(col=0;col<maxLenSub;col++){
+    for(row=0;row<n&&indexText<len;row++,indexText++){
+      result[indexText]=frequenceSub[row][col];
+      // printf("row:%d col: %d\n",row,col);
+      // printf("index:%d char: %c\n",indexText,result[indexText]);
+      // printf("\n");
+    }
   }
   result[len]='\0';
-  i=0;
-  m=0;
-  indexOfText=0;
-    for(;m<maxLenghtOfSubtext;m++){
-      for(;i<n|| indexOfText<len;i++,indexOfText++){
-        result[indexOfText]=collectSubtext[i][m];
-        printf("i: %d  m: %d \n",i,m);
-        printf("index: %d char: %c\n",indexOfText,text[indexOfText]);
-
-      }
-   }
-
+  printf("%s\n",result);
 }
+
 
 int main(int argc, char **argv){
 
@@ -192,18 +179,8 @@ int main(int argc, char **argv){
   /* At this point we have two things,
    *   1. The input cyphertext in "text"
    *   2. The maximum number of keys to try (n) - we'll be trying 1..n keys.
-   */
-
-  
-
-
-  //create (number of key) of subtext
-
-  createSubtext(n,strlen(text),text);
-  
-
-
-   /* What you need to do is as follows:
+   *
+   * What you need to do is as follows:
    *   1. create a for-loop that will check key lengths from 1..n
    *   2. for each i <= n, spit the cypher text into i sub-texts.  For i = 1, 1 subtext, for i = 2, 2 subtexts, of alternating characters etc.
    *   3. for each subtext: 
@@ -222,7 +199,9 @@ int main(int argc, char **argv){
    * getting too long, double check you're on the right track.
    *
    */
-
+  
   // Your code here...
-
+  //create sub-cryphertext according to number of key
+  createSubtext(n,strlen(text),text);
 }
+
